@@ -62,7 +62,14 @@ const CartLineItemsTable = ( {
 				return (
 					<CartLineItemRow
 						key={ lineItem.key }
-						lineItem={ lineItem }
+						lineItem={ {
+							...lineItem,
+							quantity_limits: {
+								...lineItem.quantity_limits,
+								minimum: 5,
+								multiple_of: 5,
+							},
+						} }
 						onRemove={ onRemoveRow( nextItemKey ) }
 						ref={ rowRefs.current[ lineItem.key ] }
 						tabIndex={ -1 }

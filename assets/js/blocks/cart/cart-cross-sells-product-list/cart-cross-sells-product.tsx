@@ -12,8 +12,6 @@ import { ProductResponseItem } from '@woocommerce/types';
  */
 import { Block as ProductImage } from '../../../atomic/blocks/product-elements/image/block';
 import { Block as ProductName } from '../../../atomic/blocks/product-elements/title/block';
-import { Block as ProductRating } from '../../../atomic/blocks/product-elements/rating/block';
-import { Block as ProductSaleBadge } from '../../../atomic/blocks/product-elements/sale-badge/block';
 import { Block as ProductPrice } from '../../../atomic/blocks/product-elements/price/block';
 import { Block as ProductButton } from '../../../atomic/blocks/product-elements/button/block';
 import { ImageSizing } from '../../../atomic/blocks/product-elements/image/types';
@@ -35,7 +33,14 @@ const CartCrossSellsProduct = ( {
 				<ProductDataContextProvider
 					// Setting isLoading to false, given this parameter is required.
 					isLoading={ false }
-					product={ product }
+					product={ {
+						...product,
+						name: `${ product.name } ${ product.variation
+							.split( ', ' )
+							.map( ( part ) => part.split( ': ' )[ 1 ] )
+							.filter( Boolean )
+							.join( ' ' ) }`,
+					} }
 				>
 					<div>
 						<ProductImage
@@ -46,20 +51,19 @@ const CartCrossSellsProduct = ( {
 							saleBadgeAlign={ 'left' }
 							imageSizing={ ImageSizing.SINGLE }
 							isDescendentOfQueryLoop={ false }
+							scale={ 'cover' }
+							aspectRatio={ '' }
 						/>
 						<ProductName
-							align={ '' }
-							headingLevel={ 3 }
-							showProductLink={ true }
-						/>
-						<ProductRating />
-						<ProductSaleBadge
-							productId={ product.id }
 							align={ 'left' }
+							headingLevel={ 3 }
+							showProductLink={ false }
 						/>
-						<ProductPrice />
 					</div>
-					<ProductButton />
+					<div className="cross-sells-product__bottom">
+						<ProductPrice textAlign="left" />
+						<ProductButton />
+					</div>
 				</ProductDataContextProvider>
 			</InnerBlockLayoutContextProvider>
 		</div>

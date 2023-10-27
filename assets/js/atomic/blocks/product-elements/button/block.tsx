@@ -77,7 +77,7 @@ const AddToCartButton = ( {
 		};
 	} else {
 		buttonProps.onClick = async () => {
-			await addToCart();
+			await addToCart( 5 );
 			dispatchStoreEvent( 'cart-add-item', {
 				product,
 			} );

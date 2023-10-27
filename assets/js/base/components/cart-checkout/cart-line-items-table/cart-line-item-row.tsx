@@ -23,11 +23,8 @@ import { getSetting } from '@woocommerce/settings';
 /**
  * Internal dependencies
  */
-import ProductBackorderBadge from '../product-backorder-badge';
 import ProductImage from '../product-image';
-import ProductLowStockBadge from '../product-low-stock-badge';
 import ProductMetadata from '../product-metadata';
-import ProductSaleBadge from '../product-sale-badge';
 
 /**
  * Convert a Dinero object with precision to store currency minor unit.
@@ -52,23 +49,19 @@ interface CartLineItemRowProps {
 	tabIndex?: number;
 }
 
+type NewType = JSX.Element;
+
 /**
  * Cart line item table row component.
  */
 const CartLineItemRow: React.ForwardRefExoticComponent<
 	CartLineItemRowProps & React.RefAttributes< HTMLTableRowElement >
 > = forwardRef< HTMLTableRowElement, CartLineItemRowProps >(
-	(
-		{ lineItem, onRemove = () => void null, tabIndex },
-		ref
-	): JSX.Element => {
+	( { lineItem, onRemove = () => void null, tabIndex }, ref ): NewType => {
 		const {
 			name: initialName = '',
-			catalog_visibility: catalogVisibility = 'visible',
 			short_description: shortDescription = '',
 			description: fullDescription = '',
-			low_stock_remaining: lowStockRemaining = null,
-			show_backorder_badge: showBackorderBadge = false,
 			quantity_limits: quantityLimits = {
 				minimum: 1,
 				maximum: 99,
@@ -137,17 +130,10 @@ const CartLineItemRow: React.ForwardRefExoticComponent<
 			arg,
 		} );
 
-		const regularAmountSingle = Dinero( {
-			amount: parseInt( prices.raw_prices.regular_price, 10 ),
-			precision: prices.raw_prices.precision,
-		} );
 		const purchaseAmountSingle = Dinero( {
 			amount: parseInt( prices.raw_prices.price, 10 ),
 			precision: prices.raw_prices.precision,
 		} );
-		const saleAmountSingle =
-			regularAmountSingle.subtract( purchaseAmountSingle );
-		const saleAmount = saleAmountSingle.multiply( quantity );
 		const totalsCurrency = getCurrencyFromPriceResponse( totals );
 		let lineSubtotal = parseInt( totals.line_subtotal, 10 );
 		if ( getSetting( 'displayCartPricesIncludingTax', false ) ) {
@@ -159,8 +145,6 @@ const CartLineItemRow: React.ForwardRefExoticComponent<
 		} );
 
 		const firstImage = images.length ? images[ 0 ] : {};
-		const isProductHiddenFromCatalog =
-			catalogVisibility === 'hidden' || catalogVisibility === 'search';
 
 		const cartItemClassNameFilter = applyCheckoutFilter( {
 			filterName: 'cartItemClass',
@@ -180,14 +164,6 @@ const CartLineItemRow: React.ForwardRefExoticComponent<
 
 		const subtotalPriceFormat = applyCheckoutFilter( {
 			filterName: 'subtotalPriceFormat',
-			defaultValue: '<price/>',
-			extensions,
-			arg,
-			validation: productPriceValidation,
-		} );
-
-		const saleBadgePriceFormat = applyCheckoutFilter( {
-			filterName: 'saleBadgePriceFormat',
 			defaultValue: '<price/>',
 			extensions,
 			arg,
@@ -221,46 +197,18 @@ const CartLineItemRow: React.ForwardRefExoticComponent<
 					}
 				>
 					{ /* We don't need to make it focusable, because product name has the same link. */ }
-					{ isProductHiddenFromCatalog ? (
-						<ProductImage
-							image={ firstImage }
-							fallbackAlt={ name }
-						/>
-					) : (
-						<a href={ permalink } tabIndex={ -1 }>
-							<ProductImage
-								image={ firstImage }
-								fallbackAlt={ name }
-							/>
-						</a>
-					) }
+					<ProductImage image={ firstImage } fallbackAlt={ name } />
 				</td>
 				<td className="wc-block-cart-item__product">
 					<div className="wc-block-cart-item__wrap">
 						<ProductName
-							disabled={
-								isPendingDelete || isProductHiddenFromCatalog
-							}
+							disabled={ true }
 							name={ name }
 							permalink={ permalink }
 						/>
-						{ showBackorderBadge ? (
-							<ProductBackorderBadge />
-						) : (
-							!! lowStockRemaining && (
-								<ProductLowStockBadge
-									lowStockRemaining={ lowStockRemaining }
-								/>
-							)
-						) }
-
 						<div className="wc-block-cart-item__prices">
 							<ProductPrice
 								currency={ priceCurrency }
-								regularPrice={ getAmountFromRawPrice(
-									regularAmountSingle,
-									priceCurrency
-								) }
 								price={ getAmountFromRawPrice(
 									purchaseAmountSingle,
 									priceCurrency
@@ -268,16 +216,6 @@ const CartLineItemRow: React.ForwardRefExoticComponent<
 								format={ subtotalPriceFormat }
 							/>
 						</div>
-
-						<ProductSaleBadge
-							currency={ priceCurrency }
-							saleAmount={ getAmountFromRawPrice(
-								saleAmountSingle,
-								priceCurrency
-							) }
-							format={ saleBadgePriceFormat }
-						/>
-
 						<ProductMetadata
 							shortDescription={ shortDescription }
 							fullDescription={ fullDescription }
@@ -357,17 +295,6 @@ const CartLineItemRow: React.ForwardRefExoticComponent<
 							format={ productPriceFormat }
 							price={ subtotalPrice.getAmount() }
 						/>
-
-						{ quantity > 1 && (
-							<ProductSaleBadge
-								currency={ priceCurrency }
-								saleAmount={ getAmountFromRawPrice(
-									saleAmount,
-									priceCurrency
-								) }
-								format={ saleBadgePriceFormat }
-							/>
-						) }
 					</div>
 				</td>
 			</tr>
