@@ -52,7 +52,7 @@
 			"type": "boolean",
 			"default": true
 		},
-		"nextPreviousButtonsPosition":{
+		"nextPreviousButtonsPosition": {
 			"type": "string",
 			"default": "insideTheImage"
 		},

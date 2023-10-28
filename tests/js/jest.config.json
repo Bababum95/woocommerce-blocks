@@ -40,15 +40,15 @@
 		"<rootDir>/tests/js/setup-globals.js",
 		"<rootDir>/tests/js/setup-fetch.js"
 	],
-	"setupFilesAfterEnv": [
-		"<rootDir>/tests/js/setup-after-env.ts"
-	],
+	"setupFilesAfterEnv": [ "<rootDir>/tests/js/setup-after-env.ts" ],
 	"testPathIgnorePatterns": [
 		"<rootDir>/tests/",
 		"<rootDir>/node_modules/",
 		"<rootDir>/vendor/"
 	],
-	"transformIgnorePatterns": [ "node_modules/?!(simple-html-tokenizer|is-plain-obj|is-plain-object|memize)" ],
+	"transformIgnorePatterns": [
+		"node_modules/?!(simple-html-tokenizer|is-plain-obj|is-plain-object|memize)"
+	],
 	"testEnvironment": "jsdom",
 	"preset": "@wordpress/jest-preset-default",
 	"transform": {

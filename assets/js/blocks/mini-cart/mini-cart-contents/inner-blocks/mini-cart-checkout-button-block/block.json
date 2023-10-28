@@ -35,9 +35,7 @@
 			"label": "Outline"
 		}
 	],
-	"parent": [
-		"woocommerce/mini-cart-footer-block"
-	],
+	"parent": [ "woocommerce/mini-cart-footer-block" ],
 	"textdomain": "woo-gutenberg-products-block",
 	"apiVersion": 2,
 	"$schema": "https://schemas.wp.org/trunk/block.json"

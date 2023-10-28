@@ -14,10 +14,10 @@
 	],
 	"ignorePatterns": [
 		{
-		"pattern": "^http://localhost"
+			"pattern": "^http://localhost"
 		},
 		{
-		"pattern": "https://www.php.net/manual/en/install.php"
+			"pattern": "https://www.php.net/manual/en/install.php"
 		}
 	],
 	"retryOn429": true
