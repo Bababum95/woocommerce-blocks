@@ -2,7 +2,6 @@
  * External dependencies
  */
 import classnames from 'classnames';
-import { __ } from '@wordpress/i18n';
 import { CartResponseItem } from '@woocommerce/types';
 import { createRef, useEffect, useRef } from '@wordpress/element';
 import type { RefObject } from 'react';
@@ -86,18 +85,29 @@ const CartLineItemsTable = ( {
 			<thead>
 				<tr className="wc-block-cart-items__header">
 					<th className="wc-block-cart-items__header-image">
-						<span>
-							{ __( 'Product', 'woo-gutenberg-products-block' ) }
+						<span className="wc-block-cart-items__header-value">
+							Produkt
 						</span>
 					</th>
-					<th className="wc-block-cart-items__header-product">
-						<span>
-							{ __( 'Details', 'woo-gutenberg-products-block' ) }
+					<th className="wc-block-cart-items__header-menage">
+						<span className="wc-block-cart-items__header-value">
+							Menge
 						</span>
+						<div>
+							<span className="wc-block-cart-items__header-value">
+								Pro Stück
+							</span>
+							<span className="wc-block-cart-items__header-prefix">
+								(ohne MwSt.)
+							</span>
+						</div>
 					</th>
 					<th className="wc-block-cart-items__header-total">
-						<span>
-							{ __( 'Total', 'woo-gutenberg-products-block' ) }
+						<span className="wc-block-cart-items__header-value">
+							Zwischensumme
+						</span>
+						<span className="wc-block-cart-items__header-prefix">
+							(ohne MwSt.)
 						</span>
 					</th>
 				</tr>

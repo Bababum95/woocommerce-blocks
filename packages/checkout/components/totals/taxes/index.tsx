@@ -48,10 +48,7 @@ const TotalsTaxes = ( {
 	const itemisedTaxItems: ReactElement | null =
 		showItemisedTaxes && taxLines.length > 0 ? (
 			<>
-				{ taxLines.map( ( { name, rate, price }, i ) => {
-					const label = `${ name }${
-						showRateAfterTaxName ? ` ${ rate }` : ''
-					}`;
+				{ taxLines.map( ( { price }, i ) => {
 					return (
 						<TotalsItem
 							key={ `tax-line-${ i }` }
@@ -60,7 +57,7 @@ const TotalsTaxes = ( {
 								className
 							) }
 							currency={ currency }
-							label={ label }
+							label={ 'inkl. 19 % MwSt.' }
 							value={ parseInt( price, 10 ) }
 						/>
 					);
