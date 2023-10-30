@@ -2,7 +2,6 @@
  * External dependencies
  */
 import classnames from 'classnames';
-import { __ } from '@wordpress/i18n';
 import { getSetting } from '@woocommerce/settings';
 import type { Currency } from '@woocommerce/price-format';
 import type { CartTotalsTaxLineItem } from '@woocommerce/types';
@@ -29,7 +28,6 @@ const TotalsTaxes = ( {
 	currency,
 	values,
 	className,
-	showRateAfterTaxName,
 }: TotalsTaxesProps ): ReactElement | null => {
 	const { total_tax: totalTax, tax_lines: taxLines } = values;
 
@@ -75,7 +73,7 @@ const TotalsTaxes = ( {
 					className
 				) }
 				currency={ currency }
-				label={ __( 'Taxes', 'woo-gutenberg-products-block' ) }
+				label={ 'inkl. 19 % MwSt.' }
 				value={ parseInt( totalTax, 10 ) }
 				description={ null }
 			/>
