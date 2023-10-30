@@ -13,6 +13,7 @@ import { applyCheckoutFilter } from '@woocommerce/blocks-checkout';
 import { isErrorResponse } from '@woocommerce/base-context';
 import { useCartEventsContext } from '@woocommerce/base-context/providers';
 
+const userConfirmUrl = `${ window.location.origin }/wp-admin/admin-ajax.php?action=woocommerce_ajax_check_confirmed`;
 /**
  * Internal dependencies
  */
@@ -77,18 +78,48 @@ const Block = ( {
 
 	const { dispatchOnProceedToCheckout } = useCartEventsContext();
 
+	const checkUserConfirmation = () => {
+		return fetch( userConfirmUrl ).then( ( response ) => {
+			if ( response.ok ) {
+				return response.json();
+			}
+		} );
+	};
+
 	const submitContainerContents = (
 		<Button
 			className="wc-block-cart__submit-button"
 			href={ filteredLink }
 			disabled={ isCalculating }
 			onClick={ ( e ) => {
-				dispatchOnProceedToCheckout().then( ( observerResponses ) => {
-					if ( observerResponses.some( isErrorResponse ) ) {
-						e.preventDefault();
+				e.preventDefault();
+				setShowSpinner( true );
+				checkUserConfirmation().then( ( { data } ) => {
+					if ( cart.itemsCount < 50 ) {
+						setShowSpinner( false );
+						global.popupCartError.openNotEnough();
 						return;
 					}
-					setShowSpinner( true );
+					if ( ! data.is_user_logged_in ) {
+						setShowSpinner( false );
+						global.popupCartError.openNotLogin();
+						return;
+					}
+					if ( ! data.registration_confirmed ) {
+						setShowSpinner( false );
+						global.popupCartError.openNotConfirmed();
+						return;
+					}
+					dispatchOnProceedToCheckout().then(
+						( observerResponses ) => {
+							if ( observerResponses.some( isErrorResponse ) ) {
+								e.preventDefault();
+								return;
+							}
+							setShowSpinner( true );
+						}
+					);
+					window.location.href = filteredLink;
 				} );
 			} }
 			showSpinner={ showSpinner }
