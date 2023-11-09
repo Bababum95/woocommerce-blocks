@@ -92,24 +92,40 @@ class ProductImage extends AbstractBlock {
 	 * @return string
 	 */
 	private function render_on_sale_badge( $product, $attributes ) {
-		if ( ! $product->is_on_sale() || false === $attributes['showSaleBadge'] ) {
+		if (false === $attributes['showSaleBadge'] ) {
+			return '';
+		}
+		$product_id   = $product->get_id();
+		$is_on_sale   = $product->is_on_sale();
+		$out_of_stock = ! $product->is_in_stock();
+		$nikotinfrai  = has_term('einweg-e-zigarette-ohne-nikotin', 'product_tag', $product_id );
+
+		if ( ! $is_on_sale && ! $out_of_stock && ! $nikotinfrai ) {
 			return '';
 		}
 
 		$font_size = StyleAttributesUtils::get_font_size_class_and_style( $attributes );
-
 		$on_sale_badge = sprintf(
-			'
-		<div class="wc-block-components-product-sale-badge wc-block-components-product-sale-badge--align-%s wc-block-grid__product-onsale %s" style="%s">
-			<span aria-hidden="true">%s</span>
-			<span class="screen-reader-text">Product on sale</span>
-		</div>
-	',
+			'<div class="wc-block-components-product-badge" style="%s">',
 			esc_attr( $attributes['saleBadgeAlign'] ),
 			isset( $font_size['class'] ) ? esc_attr( $font_size['class'] ) : '',
-			isset( $font_size['style'] ) ? esc_attr( $font_size['style'] ) : '',
-			esc_html__( 'Sale', 'woo-gutenberg-products-block' )
+			isset( $font_size['style'] ) ? esc_attr( $font_size['style'] ) : ''
 		);
+		if ( $is_on_sale && ! $out_of_stock ) {
+			$on_sale_badge .= '<span class="wc-block-components-product-badge__sale" aria-hidden="true">Sale</span>
+				<span class="screen-reader-text">Product on sale</span>';
+		}
+
+		if ( $nikotinfrai ) {
+			$on_sale_badge .= '<span class="wc-block-components-product-badge__nikotinfrai">Nikotinfrai</span>';
+		}
+
+		if ( $out_of_stock ) {
+			$on_sale_badge .= '<span class="wc-block-components-product-badge__out-of-stock">In Kürze</span>';
+		}
+
+		$on_sale_badge .= '</div>';
+
 		return $on_sale_badge;
 	}
 
@@ -128,15 +144,13 @@ class ProductImage extends AbstractBlock {
 		$pointer_events = false === $attributes['showProductLink'] ? 'pointer-events: none;' : '';
 
 		return sprintf(
-			'<a href="%1$s" style="%2$s">%3$s %4$s</a>',
+			'<a href="%1$s" style="%2$s">%3$s</a>%4$s',
 			$product_permalink,
 			$pointer_events,
+			$product_image,
 			$on_sale_badge,
-			$product_image
 		);
 	}
-
-
 
 	/**
 	 * Render Image.

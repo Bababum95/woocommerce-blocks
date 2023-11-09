@@ -97,25 +97,35 @@ class ProductSaleBadge extends AbstractBlock {
 			return $content;
 		}
 
-		$post_id    = $block->context['postId'];
-		$product    = wc_get_product( $post_id );
-		$is_on_sale = $product->is_on_sale();
+		$post_id      = $block->context['postId'];
+		$product      = wc_get_product($post_id);
+		$is_on_sale   = $product->is_on_sale();
+		$out_of_stock = !$product->is_in_stock();
+		$nikotinfrai  = has_term('einweg-e-zigarette-ohne-nikotin', 'product_tag', $post_id );
 
-		if ( ! $is_on_sale ) {
+		if (!$is_on_sale && !$out_of_stock && !$nikotinfrai) {
 			return null;
 		}
 
-		$classes_and_styles = StyleAttributesUtils::get_classes_and_styles_by_attributes( $attributes );
-		$classname          = isset( $attributes['className'] ) ? $attributes['className'] : '';
+		$classes_and_styles = StyleAttributesUtils::get_classes_and_styles_by_attributes($attributes);
+		$classname          = isset($attributes['className']) ? $attributes['className'] : '';
+		$align = isset($attributes['align']) ? $attributes['align'] : '';
+		$output  = '<div class="wp-block-woocommerce-product-badge ' . esc_attr($classname) . '">';
+		$output .= sprintf('<div class="wc-block-components-product-badge" style="%3$s">', esc_attr($classes_and_styles['classes']), esc_attr($align), esc_attr($classes_and_styles['styles']));
 
-		$align = isset( $attributes['align'] ) ? $attributes['align'] : '';
+		if ( $nikotinfrai ) {
+			$output .= '<span class="wc-block-components-product-badge__nikotinfrai">Nikotinfrai</span>';
+		}
 
-		$output  = '<div class="wp-block-woocommerce-product-sale-badge ' . esc_attr( $classname ) . '">';
-		$output .= sprintf( '<div class="wc-block-components-product-sale-badge %1$s wc-block-components-product-sale-badge--align-%2$s" style="%3$s">', esc_attr( $classes_and_styles['classes'] ), esc_attr( $align ), esc_attr( $classes_and_styles['styles'] ) );
-		$output .= '<span class="wc-block-components-product-sale-badge__text" aria-hidden="true">' . __( 'Sale', 'woo-gutenberg-products-block' ) . '</span>';
-		$output .= '<span class="screen-reader-text">'
-						. __( 'Product on sale', 'woo-gutenberg-products-block' )
-					. '</span>';
+		if ( $is_on_sale && !$out_of_stock ) {
+			$output .= '<span class="wc-block-components-product-badge__sale" aria-hidden="true">Sale</span>';
+			$output .= '<span class="screen-reader-text">' . __('Product on sale', 'woo-gutenberg-products-block') . '</span>';
+		}
+
+		if ( $out_of_stock ) {
+			$output .= '<span class="wc-block-components-product-badge__out-of-stock">In Kürze</span>';
+		}
+
 		$output .= '</div></div>';
 
 		return $output;

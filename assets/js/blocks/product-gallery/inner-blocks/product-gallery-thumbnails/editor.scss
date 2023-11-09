@@ -3,6 +3,8 @@
 	.wc-block-editor-product-gallery-thumbnails {
 		display: flex;
 		flex-flow: column nowrap;
+		max-height: 600px;
+		overflow: hidden;
 
 		&.wc-block-editor-product-gallery-thumbnails--bottom {
 			flex-flow: row nowrap;

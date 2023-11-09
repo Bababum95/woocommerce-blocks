@@ -183,11 +183,11 @@ interactivityApiStore( {
 					context.woocommerce.visibleImagesIds.indexOf(
 						context.woocommerce.selectedImage
 					);
-				const nextImageIndex = Math.min(
-					selectedImageIdIndex + 1,
+				const nextImageIndex =
+					selectedImageIdIndex + 1 >
 					context.woocommerce.visibleImagesIds.length - 1
-				);
-
+						? 0
+						: selectedImageIdIndex + 1;
 				context.woocommerce.selectedImage =
 					context.woocommerce.visibleImagesIds[ nextImageIndex ];
 			},
@@ -197,10 +197,10 @@ interactivityApiStore( {
 					context.woocommerce.visibleImagesIds.indexOf(
 						context.woocommerce.selectedImage
 					);
-				const previousImageIndex = Math.max(
-					selectedImageIdIndex - 1,
-					0
-				);
+				const previousImageIndex =
+					selectedImageIdIndex - 1 >= 0
+						? selectedImageIdIndex - 1
+						: context.woocommerce.visibleImagesIds.length - 1;
 				context.woocommerce.selectedImage =
 					context.woocommerce.visibleImagesIds[ previousImageIndex ];
 			},
