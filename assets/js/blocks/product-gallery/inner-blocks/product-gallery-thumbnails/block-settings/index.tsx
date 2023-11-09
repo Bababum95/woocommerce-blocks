@@ -50,7 +50,7 @@ const positionHelp: Record< ThumbnailsPosition, string > = {
 export const ProductGalleryThumbnailsBlockSettings = ( {
 	context,
 }: ProductGalleryThumbnailsSettingsProps ) => {
-	const maxNumberOfThumbnails = 8;
+	const maxNumberOfThumbnails = 30;
 	const minNumberOfThumbnails = 2;
 	const { productGalleryClientId } = context;
 	// @ts-expect-error @wordpress/block-editor/store types not provided

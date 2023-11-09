@@ -165,19 +165,8 @@ class ProductGalleryLargeImageNextPrevious extends AbstractBlock {
 
 		return sprintf(
 			'<button class="wc-block-product-gallery-large-image-next-previous--button wc-block-product-gallery-large-image-next-previous-%1$s--%2$s">
-				<svg  xmlns="http://www.w3.org/2000/svg" width="49" height="48" viewBox="0 0 49 48" fill="none">
-					<g filter="url(#filter0_b_397_11354)">
-						<rect x="0.5" width="48" height="48" rx="5" fill="black" fill-opacity="0.5"/>
-						<path d="%3$s" fill="white"/>
-					</g>
-					<defs>
-						<filter id="filter0_b_397_11354" x="-9.5" y="-10" width="68" height="68" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-							<feFlood flood-opacity="0" result="BackgroundImageFix"/>
-							<feGaussianBlur in="BackgroundImageFix" stdDeviation="5"/>
-							<feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_397_11354"/>
-							<feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_397_11354" result="shape"/>
-						</filter>
-					</defs>
+				<svg xmlns="http://www.w3.org/2000/svg" width="9" height="14" viewBox="0 0 9 14" fill="none">
+					<path d="M1.70212 11.8564L7.77344 6.99923L1.70212 2.14209" stroke="white" stroke-width="2.42855" stroke-linecap="round" stroke-linejoin="round"/>
 				</svg>
 			</button>',
 			$button_side_class,
@@ -207,17 +196,8 @@ class ProductGalleryLargeImageNextPrevious extends AbstractBlock {
 
 		return sprintf(
 			'<button class="wc-block-product-gallery-large-image-next-previous--button wc-block-product-gallery-large-image-next-previous-%1$s--%2$s">
-				<svg
-					width="22"
-					height="38"
-					viewBox="0 0 22 38"
-					fill="none"
-					xmlns="http://www.w3.org/2000/svg"
-				>
-					<path
-						d="%3$s"
-						fill="black"
-					/>
+				<svg xmlns="http://www.w3.org/2000/svg" width="9" height="14" viewBox="0 0 9 14" fill="none">
+					<path d="M1.70212 11.8564L7.77344 6.99923L1.70212 2.14209" stroke="white" stroke-width="2.42855" stroke-linecap="round" stroke-linejoin="round"/>
 				</svg>
 			</button>',
 			$button_side_class,
