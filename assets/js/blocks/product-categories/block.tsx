@@ -64,6 +64,7 @@ const ProductCategoriesBlock = ( {
 			hasEmpty,
 			isDropdown,
 			isHierarchical,
+			hideChildren,
 			showChildrenOnly,
 		} = attributes;
 
@@ -153,6 +154,17 @@ const ProductCategoriesBlock = ( {
 							} )
 						}
 					/>
+					{ isHierarchical && (
+						<ToggleControl
+							label="Hide Children"
+							checked={ hideChildren }
+							onChange={ () =>
+								setAttributes( {
+									hideChildren: ! hideChildren,
+								} )
+							}
+						/>
+					) }
 					<ToggleControl
 						label={ __(
 							'Show empty categories',

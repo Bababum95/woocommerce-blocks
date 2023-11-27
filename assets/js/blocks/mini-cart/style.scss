@@ -13,13 +13,23 @@
 	border: none;
 	color: inherit;
 	display: flex;
+	flex-direction: column;
 	font-size: inherit;
 	font-family: inherit;
 	font-weight: inherit;
 	padding: em($gap-small) em($gap-smaller);
+	cursor: pointer;
 
 	&:hover:not([disabled]) {
 		opacity: 0.6;
+	}
+
+	&::after {
+		content: 'Warenkorb';
+		font-size: 14px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: normal;
 	}
 }
 

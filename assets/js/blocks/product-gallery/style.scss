@@ -44,7 +44,7 @@ $outside-image-max-width: calc(100% - (2 * $outside-image-offset));
 		box-sizing: border-box;
 
 		img {
-			max-height: 70vh;
+			max-height: 80vh;
 		}
 
 		.wc-block-product-galler-dialog__header-right {
@@ -58,7 +58,10 @@ $outside-image-max-width: calc(100% - (2 * $outside-image-offset));
 				cursor: pointer;
 			}
 		}
-
+		.wc-block-product-gallery-thumbnails {
+			max-height: 80vh;
+			overflow: hidden;
+		}
 		.wp-block-woocommerce-product-gallery-pager,
 		.wp-block-woocommerce-product-badge {
 			display: none;

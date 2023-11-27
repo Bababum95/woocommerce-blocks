@@ -7,3 +7,12 @@
 		fill: currentColor;
 	}
 }
+
+.wc-block-product-categories-list--has-images {
+	list-style: none outside;
+
+	.wc-block-product-categories-list-item {
+		display: inline-block;
+		max-width: 200px;
+	}
+}

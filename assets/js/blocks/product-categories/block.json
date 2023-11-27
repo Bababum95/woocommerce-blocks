@@ -40,6 +40,10 @@
       "type": "boolean",
       "default": true
     },
+    "hideChildren": {
+      "type": "boolean",
+      "default": true
+    },
 	"showChildrenOnly": {
 	  "type": "boolean",
 	  "default": false

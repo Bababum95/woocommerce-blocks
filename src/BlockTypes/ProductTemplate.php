@@ -74,7 +74,7 @@ class ProductTemplate extends AbstractBlock {
 
 		$classnames .= ' wc-block-product-template';
 
-		$wrapper_attributes = get_block_wrapper_attributes( array( 'class' => trim( $classnames ) ) );
+		$wrapper_attributes = get_block_wrapper_attributes( array( 'class' => trim( 'glimp-products-list' ) ) );
 
 		$content = '';
 		while ( $query->have_posts() ) {
@@ -101,7 +101,7 @@ class ProductTemplate extends AbstractBlock {
 
 			// Wrap the render inner blocks in a `li` element with the appropriate post classes.
 			$post_classes = implode( ' ', get_post_class( 'wc-block-product' ) );
-			$content     .= '<li data-wc-key="product-item-' . get_the_ID() . '" class="' . esc_attr( $post_classes ) . '">' . $block_content . '</li>';
+			$content     .= '<li data-wc-key="product-item-' . get_the_ID() . '" class="glimp-products-list__item">' . $block_content . '</li>';
 		}
 
 		/*

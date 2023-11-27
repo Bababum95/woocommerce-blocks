@@ -114,16 +114,16 @@ class ProductSaleBadge extends AbstractBlock {
 		$output .= sprintf('<div class="wc-block-components-product-badge" style="%3$s">', esc_attr($classes_and_styles['classes']), esc_attr($align), esc_attr($classes_and_styles['styles']));
 
 		if ( $nikotinfrai ) {
-			$output .= '<span class="wc-block-components-product-badge__nikotinfrai">Nikotinfrai</span>';
+			$output .= '<span class="wc-block-components-product-badge__nikotinfrai"></span>';
 		}
 
 		if ( $is_on_sale && !$out_of_stock ) {
-			$output .= '<span class="wc-block-components-product-badge__sale" aria-hidden="true">Sale</span>';
+			$output .= '<span class="wc-block-components-product-badge__sale" aria-hidden="true"></span>';
 			$output .= '<span class="screen-reader-text">' . __('Product on sale', 'woo-gutenberg-products-block') . '</span>';
 		}
 
 		if ( $out_of_stock ) {
-			$output .= '<span class="wc-block-components-product-badge__out-of-stock">In Kürze</span>';
+			$output .= '<span class="wc-block-components-product-badge__out-of-stock"></span>';
 		}
 
 		$output .= '</div></div>';

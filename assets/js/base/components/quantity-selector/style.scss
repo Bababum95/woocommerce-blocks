@@ -12,26 +12,12 @@
 }
 
 .wc-block-components-quantity-selector {
-	border-radius: $universal-border-radius;
-	// needed so that buttons fill the container.
+	border-radius: 10px;
 	box-sizing: content-box;
 	display: flex;
-	margin: 0 0 0.25em 0;
 	position: relative;
-	width: 107px;
-
-	&::after {
-		border-radius: $universal-border-radius;
-		border: 1px solid currentColor;
-		bottom: 0;
-		content: "";
-		left: 0;
-		opacity: 0.45;
-		pointer-events: none;
-		position: absolute;
-		right: 0;
-		top: 0;
-	}
+	width: 92px;
+	background-color: #f2f2f2;
 
 	// Extra label for specificity needed in the editor.
 	input.wc-block-components-quantity-selector__input {
@@ -45,7 +31,7 @@
 		font-weight: 600;
 		line-height: 1;
 		margin: 0;
-		min-width: 40px;
+		min-width: 30px;
 		order: 2;
 		padding: 0.4em 0;
 		text-align: center;
@@ -72,7 +58,7 @@
 		cursor: pointer;
 		font-style: normal;
 		font-weight: normal;
-		min-width: 30px;
+		min-width: 25px;
 		opacity: 0.6;
 		text-align: center;
 		text-decoration: none;

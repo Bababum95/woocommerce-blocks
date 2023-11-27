@@ -112,16 +112,16 @@ class ProductImage extends AbstractBlock {
 			isset( $font_size['style'] ) ? esc_attr( $font_size['style'] ) : ''
 		);
 		if ( $is_on_sale && ! $out_of_stock ) {
-			$on_sale_badge .= '<span class="wc-block-components-product-badge__sale" aria-hidden="true">Sale</span>
+			$on_sale_badge .= '<span class="wc-block-components-product-badge__sale" aria-hidden="true"></span>
 				<span class="screen-reader-text">Product on sale</span>';
 		}
 
 		if ( $nikotinfrai ) {
-			$on_sale_badge .= '<span class="wc-block-components-product-badge__nikotinfrai">Nikotinfrai</span>';
+			$on_sale_badge .= '<span class="wc-block-components-product-badge__nikotinfrai"></span>';
 		}
 
 		if ( $out_of_stock ) {
-			$on_sale_badge .= '<span class="wc-block-components-product-badge__out-of-stock">In Kürze</span>';
+			$on_sale_badge .= '<span class="wc-block-components-product-badge__out-of-stock"></span>';
 		}
 
 		$on_sale_badge .= '</div>';
