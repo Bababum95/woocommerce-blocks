@@ -1,142 +1,149 @@
 /**
  * External dependencies
  */
-import { store as interactivityApiStore } from '@woocommerce/interactivity';
+import { store, getContext as getContextFn } from '@woocommerce/interactivity';
+import { StorePart } from '@woocommerce/utils';
 
-interface State {
-	[ key: string ]: unknown;
+export interface ProductGalleryContext {
+	selectedImage: string;
+	firstMainImageId: string;
+	imageId: string;
+	visibleImagesIds: string[];
+	dialogVisibleImagesIds: string[];
+	isDialogOpen: boolean;
+	productId: string;
 }
 
-export interface ProductGalleryInteractivityApiContext {
-	woocommerce: {
-		selectedImage: string;
-		imageId: string;
-		visibleImagesIds: string[];
-		isDialogOpen: boolean;
-		productId: string;
-	};
-}
+const getContext = ( ns?: string ) =>
+	getContextFn< ProductGalleryContext >( ns );
 
-export interface ProductGallerySelectors {
-	woocommerce: {
-		isSelected: ( store: unknown ) => boolean;
-		pagerDotFillOpacity: ( store: SelectorsStore ) => number;
-		selectedImageIndex: ( store: SelectorsStore ) => number;
-		isDialogOpen: ( store: unknown ) => boolean;
-	};
-}
+type Store = typeof productGallery & StorePart< ProductGallery >;
+const { state } = store< Store >( 'woocommerce/product-gallery' );
 
-interface Actions {
-	woocommerce: {
-		thumbnails: {
-			handleClick: (
-				context: ProductGalleryInteractivityApiContext
-			) => void;
-		};
-		handlePreviousImageButtonClick: {
-			( store: Store ): void;
-		};
-		handleNextImageButtonClick: {
-			( store: Store ): void;
-		};
-	};
-}
+const selectImage = (
+	context: ProductGalleryContext,
+	select: 'next' | 'previous'
+) => {
+	const imagesIds =
+		context[
+			context.isDialogOpen ? 'dialogVisibleImagesIds' : 'visibleImagesIds'
+		];
+	const selectedImageIdIndex = imagesIds.indexOf( context.selectedImage );
+	const nextImageIndex =
+		select === 'next'
+			? Math.min( selectedImageIdIndex + 1, imagesIds.length - 1 )
+			: Math.max( selectedImageIdIndex - 1, 0 );
+	context.selectedImage = imagesIds[ nextImageIndex ];
+};
 
-interface Store {
-	state: State;
-	context: ProductGalleryInteractivityApiContext;
-	selectors: ProductGallerySelectors;
-	actions: Actions;
-	ref?: HTMLElement;
-}
+const closeDialog = ( context: ProductGalleryContext ) => {
+	context.isDialogOpen = false;
+	// Reset the main image.
+	context.selectedImage = context.firstMainImageId;
+};
 
-interface Event {
-	keyCode: number;
-}
+const productGallery = {
+	state: {
+		get isSelected() {
+			const { selectedImage, imageId } = getContext();
+			return selectedImage === imageId;
+		},
+		get pagerDotFillOpacity(): number {
+			return state.isSelected ? 1 : 0.2;
+		},
+	},
+	actions: {
+		closeDialog: () => {
+			const context = getContext();
+			closeDialog( context );
+		},
+		openDialog: () => {
+			const context = getContext();
+			context.isDialogOpen = true;
+		},
+		selectImage: () => {
+			const context = getContext();
+			context.selectedImage = context.imageId;
+		},
+		selectNextImage: ( event: MouseEvent ) => {
+			event.stopPropagation();
+			const context = getContext();
+			selectImage( context, 'next' );
+		},
+		selectPreviousImage: ( event: MouseEvent ) => {
+			event.stopPropagation();
+			const context = getContext();
+			selectImage( context, 'previous' );
+		},
+	},
+	callbacks: {
+		watchForChangesOnAddToCartForm: () => {
+			const context = getContext();
+			const variableProductCartForm = document.querySelector(
+				`form[data-product_id="${ context.productId }"]`
+			);
 
-type SelectorsStore = Pick< Store, 'context' | 'selectors' | 'ref' >;
+			if ( ! variableProductCartForm ) {
+				return;
+			}
 
-enum Keys {
-	ESC = 27,
-	LEFT_ARROW = 37,
-	RIGHT_ARROW = 39,
-}
+			// TODO: Replace with an interactive block that calls `actions.selectImage`.
+			const observer = new MutationObserver( function ( mutations ) {
+				for ( const mutation of mutations ) {
+					const mutationTarget = mutation.target as HTMLElement;
+					const currentImageAttribute =
+						mutationTarget.getAttribute( 'current-image' );
+					if (
+						mutation.type === 'attributes' &&
+						currentImageAttribute &&
+						context.visibleImagesIds.includes(
+							currentImageAttribute
+						)
+					) {
+						context.selectedImage = currentImageAttribute;
+					}
+				}
+			} );
 
-interactivityApiStore( {
-	state: {},
-	effects: {
-		woocommerce: {
-			watchForChangesOnAddToCartForm: ( store: Store ) => {
-				const variableProductCartForm = document.querySelector(
-					`form[data-product_id="${ store.context.woocommerce.productId }"]`
-				);
+			observer.observe( variableProductCartForm, {
+				attributes: true,
+			} );
 
-				if ( ! variableProductCartForm ) {
+			return () => {
+				observer.disconnect();
+			};
+		},
+		keyboardAccess: () => {
+			const context = getContext();
+			let allowNavigation = true;
+
+			const handleKeyEvents = ( event: KeyboardEvent ) => {
+				if ( ! allowNavigation || ! context.isDialogOpen ) {
 					return;
 				}
 
-				const observer = new MutationObserver( function ( mutations ) {
-					for ( const mutation of mutations ) {
-						const mutationTarget = mutation.target as HTMLElement;
-						const currentImageAttribute =
-							mutationTarget.getAttribute( 'current-image' );
-						if (
-							mutation.type === 'attributes' &&
-							currentImageAttribute &&
-							store.context.woocommerce.visibleImagesIds.includes(
-								currentImageAttribute
-							)
-						) {
-							store.context.woocommerce.selectedImage =
-								currentImageAttribute;
-						}
-					}
+				// Disable navigation for a brief period to prevent spamming.
+				allowNavigation = false;
+
+				requestAnimationFrame( () => {
+					allowNavigation = true;
 				} );
 
-				observer.observe( variableProductCartForm, {
-					attributes: true,
-				} );
+				// Check if the esc key is pressed.
+				if ( event.code === 'Escape' ) {
+					closeDialog( context );
+				}
 
-				return () => {
-					observer.disconnect();
-				};
-			},
-			keyboardAccess: ( store: Store ) => {
-				const { context, actions } = store;
-				let allowNavigation = true;
+				// Check if left arrow key is pressed.
+				if ( event.code === 'ArrowLeft' ) {
+					selectImage( context, 'previous' );
+				}
 
-				const handleKeyEvents = ( event: Event ) => {
-					if (
-						! allowNavigation ||
-						! context.woocommerce?.isDialogOpen
-					) {
-						return;
-					}
-
-					// Disable navigation for a brief period to prevent spamming.
-					allowNavigation = false;
-
-					requestAnimationFrame( () => {
-						allowNavigation = true;
-					} );
-
-					// Check if the esc key is pressed.
-					if ( event.keyCode === Keys.ESC ) {
-						context.woocommerce.isDialogOpen = false;
-					}
-
-					// Check if left arrow key is pressed.
-					if ( event.keyCode === Keys.LEFT_ARROW ) {
-						actions.woocommerce.handlePreviousImageButtonClick(
-							store
-						);
-					}
-
-					// Check if right arrow key is pressed.
-					if ( event.keyCode === Keys.RIGHT_ARROW ) {
-						actions.woocommerce.handleNextImageButtonClick( store );
-					}
-				};
+				// Check if right arrow key is pressed.
+				if ( event.code === 'ArrowRight' ) {
+					selectImage( context, 'next' );
+				}
+			};
 
 			document.addEventListener( 'keydown', handleKeyEvents );
 

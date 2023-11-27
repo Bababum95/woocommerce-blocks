@@ -10,6 +10,8 @@ $gallery-next-previous-inside-image: "#{$gallery}:not([data-next-previous-button
 
 $outside-image-offset: 30px;
 $outside-image-max-width: calc(100% - (2 * $outside-image-offset));
+$thumbnails-gap: 15px;
+$default-number-of-thumbnails: 3;
 
 // Product Gallery
 #{$gallery} {
@@ -73,6 +75,7 @@ $outside-image-max-width: calc(100% - (2 * $outside-image-offset));
 	height: 100%;
 	position: relative;
 	overflow: hidden;
+	flex-grow: 1;
 
 	// Restrict the width of the Large Image when the Next/Previous buttons are outside the image.
 	#{$gallery-next-previous-outside-image} & .wc-block-product-gallery-large-image__image-element {
@@ -83,6 +86,7 @@ $outside-image-max-width: calc(100% - (2 * $outside-image-offset));
 	}
 
 	.wc-block-product-gallery-large-image__wrapper {
+		aspect-ratio: 1 / 1;
 		flex-shrink: 0;
 		max-width: 100%;
 		overflow: hidden;
@@ -266,6 +270,8 @@ $outside-image-max-width: calc(100% - (2 * $outside-image-offset));
 	justify-content: center;
 	list-style: none;
 	gap: $gap-small;
+	margin-top: 0;
+	margin-bottom: 0;
 	padding: 0;
 }
 
@@ -286,11 +292,40 @@ $outside-image-max-width: calc(100% - (2 * $outside-image-offset));
 
 	img {
 		cursor: pointer;
+		height: auto;
+		width: auto;
+		max-width: 100%;
 	}
 
-	.is-vertical & {
-		display: flex;
+	#{$gallery}[data-thumbnails-position='bottom'] & {
 		flex-direction: row;
+		gap: 0 15px;
+	}
+
+	#{$gallery}:not([data-thumbnails-position='bottom']) & {
+		flex-direction: column;
+		gap: 15px 0;
+
+		// Calculate the total width occupied by the gaps between thumbnails.
+		$gap-width: $thumbnails-gap * ($default-number-of-thumbnails - 1);
+
+		// Calculate the border width, which is multiplied by 2 to account for both sides of each thumbnail.
+		$border-width: #{$default-number-of-thumbnails * 1px * 2};
+
+		// Calculate the width of each thumbnail by accounting for the gap, border, and additional space.
+		flex-basis: calc((100% - #{$gap-width} - #{$border-width} - 4px) / #{$default-number-of-thumbnails});
+	}
+
+	@for $i from 3 through 8 {
+		#{$gallery}[data-thumbnails-number-of-thumbnails='#{$i}']:not([data-thumbnails-position='bottom']) & {
+			// Calculate the total width occupied by the gaps between thumbnails.
+			$gap-width: $thumbnails-gap * ($i - 1);
+
+			// Calculate the border width, which is multiplied by 2 to account for both sides of each thumbnail.
+			$border-width: $i * 1px * 2;
+
+			flex-basis: calc((100% - #{$gap-width} - #{$border-width}) / $i);
+		}
 	}
 
 	.wc-block-product-gallery-thumbnails__thumbnail {

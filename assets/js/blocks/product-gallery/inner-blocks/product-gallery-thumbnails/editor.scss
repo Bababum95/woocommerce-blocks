@@ -9,13 +9,14 @@ $thumbnails-gap: 15px;
 		gap: 0 15px;
 	}
 
-	&.wc-block-editor-product-gallery-thumbnails--bottom {
-		flex-flow: row nowrap;
-	}
+		&.wc-block-editor-product-gallery-thumbnails--bottom {
+			flex-flow: row nowrap;
+		}
 
-	img {
-		width: 100px;
-		height: 100px;
-		margin: 5px;
+		img {
+			width: 100px;
+			height: 100px;
+			margin: 5px;
+		}
 	}
 }

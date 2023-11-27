@@ -110,7 +110,7 @@ export const ProductGalleryThumbnailsBlockSettings = ( {
 						} )
 					}
 					help={ __(
-						'Choose how many thumbnails (2-8) will display. If more images exist, a “View all” button will display.',
+						'Choose how many thumbnails (3-8) will display. If more images exist, a “View all” button will display.',
 						'woo-gutenberg-products-block'
 					) }
 					max={ maxNumberOfThumbnails }
