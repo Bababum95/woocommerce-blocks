@@ -17,6 +17,7 @@ $outside-image-max-width: calc(100% - (2 * $outside-image-offset));
 	.wc-block-product-gallery__wrapper {
 		aspect-ratio: 746 / 615;
 
+		& > div {
 			height: 100%;
 		}
 	}
@@ -181,8 +182,10 @@ $outside-image-max-width: calc(100% - (2 * $outside-image-offset));
 		align-items: center;
 		justify-content: center;
 		padding-left: 2px;
+		box-shadow: 0 5px 5px rgba(0, 0, 0, 0.25);
 
 		&:hover {
+			background-color: #9e58f7;
 		}
 
 	}
