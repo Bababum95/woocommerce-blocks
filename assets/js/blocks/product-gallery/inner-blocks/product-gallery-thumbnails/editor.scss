@@ -1,10 +1,13 @@
-.wc-block-product-gallery-thumbnails {
-	width: fit-content;
-	.wc-block-editor-product-gallery-thumbnails {
-		display: flex;
-		flex-flow: column nowrap;
-		max-height: 600px;
-		overflow: hidden;
+$thumbnails: ".wc-block-editor-product-gallery-thumbnails";
+$thumbnails-gap: 15px;
+
+#{$thumbnails} {
+	display: flex;
+
+	.wc-block-product-gallery-thumbnails--position-bottom & {
+		flex-direction: row;
+		gap: 0 15px;
+	}
 
 		&.wc-block-editor-product-gallery-thumbnails--bottom {
 			flex-flow: row nowrap;

@@ -138,74 +138,14 @@ interactivityApiStore( {
 					}
 				};
 
-				document.addEventListener( 'keydown', handleKeyEvents );
-			},
-		},
-	},
-	selectors: {
-		woocommerce: {
-			isSelected: ( { context }: Store ) => {
-				return (
-					context?.woocommerce.selectedImage ===
-					context?.woocommerce.imageId
-				);
-			},
-			pagerDotFillOpacity( store: SelectorsStore ) {
-				const { context } = store;
+			document.addEventListener( 'keydown', handleKeyEvents );
 
-				return context?.woocommerce.selectedImage ===
-					context?.woocommerce.imageId
-					? 1
-					: 0.2;
-			},
-			isDialogOpen: ( { context }: Store ) => {
-				return context.woocommerce.isDialogOpen;
-			},
+			return () =>
+				document.removeEventListener( 'keydown', handleKeyEvents );
 		},
 	},
-	actions: {
-		woocommerce: {
-			thumbnails: {
-				handleClick: ( { context }: Store ) => {
-					context.woocommerce.selectedImage =
-						context.woocommerce.imageId;
-				},
-			},
-			dialog: {
-				handleCloseButtonClick: ( { context }: Store ) => {
-					context.woocommerce.isDialogOpen = false;
-				},
-			},
-			handleSelectImage: ( { context }: Store ) => {
-				context.woocommerce.selectedImage = context.woocommerce.imageId;
-			},
-			handleNextImageButtonClick: ( store: Store ) => {
-				const { context } = store;
-				const selectedImageIdIndex =
-					context.woocommerce.visibleImagesIds.indexOf(
-						context.woocommerce.selectedImage
-					);
-				const nextImageIndex =
-					selectedImageIdIndex + 1 >
-					context.woocommerce.visibleImagesIds.length - 1
-						? 0
-						: selectedImageIdIndex + 1;
-				context.woocommerce.selectedImage =
-					context.woocommerce.visibleImagesIds[ nextImageIndex ];
-			},
-			handlePreviousImageButtonClick: ( store: Store ) => {
-				const { context } = store;
-				const selectedImageIdIndex =
-					context.woocommerce.visibleImagesIds.indexOf(
-						context.woocommerce.selectedImage
-					);
-				const previousImageIndex =
-					selectedImageIdIndex - 1 >= 0
-						? selectedImageIdIndex - 1
-						: context.woocommerce.visibleImagesIds.length - 1;
-				context.woocommerce.selectedImage =
-					context.woocommerce.visibleImagesIds[ previousImageIndex ];
-			},
-		},
-	},
-} );
+};
+
+store( 'woocommerce/product-gallery', productGallery );
+
+export type ProductGallery = typeof productGallery;
