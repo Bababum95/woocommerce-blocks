@@ -2,7 +2,6 @@
  * External dependencies
  */
 import classnames from 'classnames';
-import { isValidElement } from '@wordpress/element';
 import type { ReactElement, ReactNode } from 'react';
 import type { Currency } from '@woocommerce/price-format';
 
@@ -10,7 +9,7 @@ import type { Currency } from '@woocommerce/price-format';
  * Internal dependencies
  */
 import './style.scss';
-import FormattedMonetaryAmount from '../../../../components/formatted-monetary-amount';
+import TotalsItemValue from './TotalsItemValue';
 
 export interface TotalsItemProps {
 	className?: string;
@@ -20,27 +19,6 @@ export interface TotalsItemProps {
 	value: number | ReactNode;
 	description?: ReactNode;
 }
-
-const TotalsItemValue = ( {
-	value,
-	currency,
-}: Partial< TotalsItemProps > ): ReactElement | null => {
-	if ( isValidElement( value ) ) {
-		return (
-			<div className="wc-block-components-totals-item__value">
-				{ value }
-			</div>
-		);
-	}
-
-	return Number.isFinite( value ) ? (
-		<FormattedMonetaryAmount
-			className="wc-block-components-totals-item__value"
-			currency={ currency || {} }
-			value={ value as number }
-		/>
-	) : null;
-};
 
 const TotalsItem = ( {
 	className,

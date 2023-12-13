@@ -1,8 +1,7 @@
 /**
  * External dependencies
  */
-import { __ } from '@wordpress/i18n';
-import { TotalsItem } from '@woocommerce/blocks-checkout';
+import { TotalsItemValue } from '@woocommerce/blocks-checkout';
 import { getCurrencyFromPriceResponse } from '@woocommerce/price-format';
 import {
 	usePaymentMethods,
@@ -48,6 +47,7 @@ const Block = ( {
 		? parseInt( cartTotals.total_items, 10 ) +
 		  parseInt( cartTotals.total_items_tax, 10 )
 		: parseInt( cartTotals.total_items, 10 );
+	const taxTotal = parseInt( cartTotals.total_tax, 10 );
 
 	// The `Cart` and `Checkout` buttons were converted to inner blocks, but we still need to render the buttons
 	// for themes that have the old `mini-cart.html` template. So we check if there are any inner blocks (buttons) and
@@ -58,16 +58,20 @@ const Block = ( {
 		<div
 			className={ classNames( className, 'wc-block-mini-cart__footer' ) }
 		>
-			<TotalsItem
-				className="wc-block-mini-cart__footer-subtotal"
-				currency={ getCurrencyFromPriceResponse( cartTotals ) }
-				label={ __( 'Subtotal', 'woo-gutenberg-products-block' ) }
-				value={ subTotal }
-				description={ __(
-					'Shipping, taxes, and discounts calculated at checkout.',
-					'woo-gutenberg-products-block'
-				) }
-			/>
+			<div className="wc-block-mini-cart__footer-row wc-block-mini-cart__footer-row_total">
+				<span>Zwischensumme</span>
+				<TotalsItemValue
+					value={ subTotal }
+					currency={ getCurrencyFromPriceResponse( cartTotals ) }
+				/>
+			</div>
+			<div className="wc-block-mini-cart__footer-row">
+				<span>inkl. 19 % MwSt.</span>
+				<TotalsItemValue
+					value={ taxTotal }
+					currency={ getCurrencyFromPriceResponse( cartTotals ) }
+				/>
+			</div>
 			<div className="wc-block-mini-cart__footer-actions">
 				{ hasButtons ? (
 					children

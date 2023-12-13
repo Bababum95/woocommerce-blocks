@@ -2,7 +2,6 @@
  * External dependencies
  */
 import classnames from 'classnames';
-import { __ } from '@wordpress/i18n';
 import { CartResponseItem } from '@woocommerce/types';
 import { createRef, useEffect, useRef } from '@wordpress/element';
 import type { RefObject } from 'react';
@@ -21,6 +20,7 @@ interface CartLineItemsTableProps {
 	lineItems: CartResponseItem[];
 	isLoading: boolean;
 	className?: string;
+	fullPage?: boolean;
 }
 
 const setRefs = ( lineItems: CartResponseItem[] ) => {
@@ -34,6 +34,7 @@ const setRefs = ( lineItems: CartResponseItem[] ) => {
 const CartLineItemsTable = ( {
 	lineItems = [],
 	isLoading = false,
+	fullPage = false,
 	className,
 }: CartLineItemsTableProps ): JSX.Element => {
 	const tableRef = useRef< HTMLTableElement | null >( null );
@@ -66,6 +67,7 @@ const CartLineItemsTable = ( {
 						onRemove={ onRemoveRow( nextItemKey ) }
 						ref={ rowRefs.current[ lineItem.key ] }
 						tabIndex={ -1 }
+						fullPage={ fullPage }
 					/>
 				);
 		  } );
@@ -79,18 +81,14 @@ const CartLineItemsTable = ( {
 			<thead>
 				<tr className="wc-block-cart-items__header">
 					<th className="wc-block-cart-items__header-image">
-						<span>
-							{ __( 'Product', 'woo-gutenberg-products-block' ) }
-						</span>
+						<span>Produkt</span>
 					</th>
 					<th className="wc-block-cart-items__header-product">
-						<span>
-							{ __( 'Details', 'woo-gutenberg-products-block' ) }
+						<span className="wc-block-cart-items__header-menge">
+							Menge
 						</span>
-					</th>
-					<th className="wc-block-cart-items__header-total">
-						<span>
-							{ __( 'Total', 'woo-gutenberg-products-block' ) }
+						<span className="wc-block-cart-items__header-subtotal">
+							Zwischensumme
 						</span>
 					</th>
 				</tr>

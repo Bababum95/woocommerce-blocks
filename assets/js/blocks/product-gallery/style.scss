@@ -101,6 +101,7 @@ $outside-image-max-width: calc(100% - (2 * $outside-image-offset));
 		height: 100%;
 		scroll-behavior: auto;
 		align-items: center;
+		border-radius: 15px;
 	}
 
 	#{$gallery-next-previous-inside-image} & .wc-block-product-gallery-large-image__image-element {
@@ -121,7 +122,6 @@ $outside-image-max-width: calc(100% - (2 * $outside-image-offset));
 		height: 100%;
 		object-fit: cover;
 		object-position: center;
-		border-radius: 15px;
 
 		// Keep the order in this way. The hoverZoom class should override the full-screen-on-click class when both are applied.
 		&.wc-block-woocommerce-product-gallery-large-image__image--full-screen-on-click {
@@ -314,6 +314,46 @@ $outside-image-max-width: calc(100% - (2 * $outside-image-offset));
 
 		&:last-of-type {
 			margin-bottom: 0;
+		}
+	}
+}
+
+
+@media screen and (max-width: 768px) {
+
+	#{$gallery} {
+		
+		.wc-block-product-gallery__wrapper {
+			aspect-ratio: auto;
+			flex-direction: column;
+		}
+	}
+
+	#{$large-image} {
+		.wc-block-product-gallery-large-image__container {
+			overflow-x: auto;
+
+			&::-webkit-scrollbar {
+				display: none;
+			}
+		}
+
+		.wc-block-product-gallery-large-image__wrapper {
+			scroll-snap-align: start;
+		}
+	}
+	.wc-block-product-gallery-large-image-next-previous-container {
+		display: none;
+	}
+	#{$thumbnails} {
+		order: 2;
+		display: flex;
+		height: auto;
+		width: 100%;
+		gap: 12px;
+
+		.wc-block-product-gallery-thumbnails__thumbnail {
+			margin: 0;
 		}
 	}
 }

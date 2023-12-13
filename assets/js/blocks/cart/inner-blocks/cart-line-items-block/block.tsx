@@ -11,6 +11,7 @@ const Block = ( { className }: { className: string } ): JSX.Element => {
 			className={ className }
 			lineItems={ cartItems }
 			isLoading={ cartIsLoading }
+			fullPage
 		/>
 	);
 };

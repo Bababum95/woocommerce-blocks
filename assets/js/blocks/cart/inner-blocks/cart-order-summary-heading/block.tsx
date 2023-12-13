@@ -3,18 +3,12 @@
  */
 import classnames from 'classnames';
 
-const Block = ( {
-	className,
-	content = '',
-}: {
-	className: string;
-	content: string;
-} ): JSX.Element => {
+const Block = ( { className }: { className: string } ): JSX.Element => {
 	return (
 		<span
 			className={ classnames( className, 'wc-block-cart__totals-title' ) }
 		>
-			{ content }
+			Warenkorb-Summe
 		</span>
 	);
 };

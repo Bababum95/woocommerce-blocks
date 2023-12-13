@@ -17,12 +17,6 @@
 	.wc-block-components-totals-footer-item {
 		margin: 0;
 	}
-
-	table.wc-block-cart-items,
-	table.wc-block-cart-items th,
-	table.wc-block-cart-items td {
-		margin: 0 0 2em;
-	}
 }
 
 // Loading placeholder state.
@@ -119,13 +113,12 @@
 	}
 
 	.wc-block-cart__totals-title {
-		@include text-heading();
-		@include font-size( smaller );
+		font-size: 28px;
+		font-style: normal;
+		font-weight: 700;
+		line-height: 130%;
+		margin-bottom: 28px;
 		display: block;
-		font-weight: 600;
-		padding: 0.25rem 0;
-		text-align: right;
-		text-transform: uppercase;
 	}
 
 	.wc-block-components-sidebar {

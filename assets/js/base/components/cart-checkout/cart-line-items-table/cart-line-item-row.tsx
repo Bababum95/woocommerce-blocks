@@ -18,13 +18,12 @@ import Dinero from 'dinero.js';
 import { forwardRef, useMemo } from '@wordpress/element';
 import type { CartItem, CartVariationItem } from '@woocommerce/types';
 import { objectHasProp, Currency } from '@woocommerce/types';
+import { getSetting } from '@woocommerce/settings';
 
 /**
  * Internal dependencies
  */
-import ProductBackorderBadge from '../product-backorder-badge';
 import ProductImage from '../product-image';
-import ProductLowStockBadge from '../product-low-stock-badge';
 
 /**
  * Convert a Dinero object with precision to store currency minor unit.
@@ -61,6 +60,7 @@ interface CartLineItemRowProps {
 	lineItem: CartItem | Record< string, never >;
 	onRemove?: () => void;
 	tabIndex?: number;
+	fullPage?: boolean;
 }
 
 /**
@@ -70,14 +70,12 @@ const CartLineItemRow: React.ForwardRefExoticComponent<
 	CartLineItemRowProps & React.RefAttributes< HTMLTableRowElement >
 > = forwardRef< HTMLTableRowElement, CartLineItemRowProps >(
 	(
-		{ lineItem, onRemove = () => void null, tabIndex },
+		{ lineItem, onRemove = () => void null, tabIndex, fullPage },
 		ref
 	): JSX.Element => {
 		const {
 			name: initialName = '',
 			catalog_visibility: catalogVisibility = 'visible',
-			low_stock_remaining: lowStockRemaining = null,
-			show_backorder_badge: showBackorderBadge = false,
 			quantity_limits: quantityLimits = {
 				minimum: 1,
 				maximum: 99,
@@ -106,6 +104,17 @@ const CartLineItemRow: React.ForwardRefExoticComponent<
 					regular_price: '0',
 					sale_price: '0',
 				},
+			},
+			totals = {
+				currency_code: 'USD',
+				currency_minor_unit: 2,
+				currency_symbol: '$',
+				currency_prefix: '$',
+				currency_suffix: '',
+				currency_decimal_separator: '.',
+				currency_thousand_separator: ',',
+				line_subtotal: '0',
+				line_subtotal_tax: '0',
 			},
 			extensions,
 		} = lineItem;
@@ -143,10 +152,28 @@ const CartLineItemRow: React.ForwardRefExoticComponent<
 			precision: prices.raw_prices.precision,
 		} );
 
+		const productPriceFormat = applyCheckoutFilter( {
+			filterName: 'cartItemPrice',
+			defaultValue: '<price/>',
+			extensions,
+			arg,
+			validation: productPriceValidation,
+		} );
+
+		const totalsCurrency = getCurrencyFromPriceResponse( totals );
+		let lineSubtotal = parseInt( totals.line_subtotal, 10 );
+		if ( getSetting( 'displayCartPricesIncludingTax', false ) ) {
+			lineSubtotal += parseInt( totals.line_subtotal_tax, 10 );
+		}
+
+		const subtotalPrice = Dinero( {
+			amount: lineSubtotal,
+			precision: totalsCurrency.minorUnit,
+		} );
+
 		const firstImage = images.length ? images[ 0 ] : {};
 		const isProductHiddenFromCatalog =
 			catalogVisibility === 'hidden' || catalogVisibility === 'search';
-
 		const cartItemClassNameFilter = applyCheckoutFilter( {
 			filterName: 'cartItemClass',
 			defaultValue: '',
@@ -170,7 +197,6 @@ const CartLineItemRow: React.ForwardRefExoticComponent<
 			extensions,
 			arg,
 		} );
-
 		return (
 			<tr
 				className={ classnames(
@@ -206,7 +232,11 @@ const CartLineItemRow: React.ForwardRefExoticComponent<
 					) }
 				</td>
 				<td className="wc-block-cart-item__product">
-					<div className="wc-block-cart-item__wrap">
+					<div
+						className={ classnames( 'wc-block-cart-item__wrap', {
+							'full-page': fullPage,
+						} ) }
+					>
 						<ProductName
 							disabled={
 								isPendingDelete || isProductHiddenFromCatalog
@@ -214,116 +244,110 @@ const CartLineItemRow: React.ForwardRefExoticComponent<
 							name={ getName( name, variation ) }
 							permalink={ clearLink( permalink ) }
 						/>
-						{ showBackorderBadge ? (
-							<ProductBackorderBadge />
-						) : (
-							!! lowStockRemaining && (
-								<ProductLowStockBadge
-									lowStockRemaining={ lowStockRemaining }
-								/>
-							)
-						) }
-						<div className="wc-block-cart-item__bottom">
-							<div className="wc-block-cart-item__prices">
-								<ProductPrice
-									currency={ priceCurrency }
-									regularPrice={ getAmountFromRawPrice(
-										regularAmountSingle,
-										priceCurrency
-									) }
-									price={ getAmountFromRawPrice(
-										purchaseAmountSingle,
-										priceCurrency
-									) }
-									format={ subtotalPriceFormat }
-								/>
-							</div>
-							<span className="wc-block-cart-item__divider">
-								x
-							</span>
-							<div className="wc-block-cart-item__quantity">
-								{ ! soldIndividually &&
-									!! quantityLimits.editable && (
-										<QuantitySelector
-											disabled={ isPendingDelete }
-											quantity={ quantity }
-											minimum={ quantityLimits.minimum }
-											maximum={ quantityLimits.maximum }
-											step={ quantityLimits.multiple_of }
-											onChange={ ( newQuantity ) => {
-												setItemQuantity( newQuantity );
-												dispatchStoreEvent(
-													'cart-set-item-quantity',
-													{
-														product: lineItem,
-														quantity: newQuantity,
-													}
-												);
-											} }
-											itemName={ name }
-										/>
-									) }
-								{ showRemoveItemLink && (
-									<button
-										className="wc-block-cart-item__remove-link"
-										aria-label={ sprintf(
-											/* translators: %s refers to the item's name in the cart. */
-											__(
-												'Remove %s from cart',
-												'woo-gutenberg-products-block'
-											),
-											name
-										) }
-										onClick={ () => {
-											onRemove();
-											removeItem();
+						<div className="wc-block-cart-item__prices">
+							<ProductPrice
+								currency={ priceCurrency }
+								regularPrice={ getAmountFromRawPrice(
+									regularAmountSingle,
+									priceCurrency
+								) }
+								price={ getAmountFromRawPrice(
+									purchaseAmountSingle,
+									priceCurrency
+								) }
+								format={ subtotalPriceFormat }
+							/>
+						</div>
+						<div className="wc-block-cart-item__quantity">
+							{ ! soldIndividually &&
+								!! quantityLimits.editable && (
+									<QuantitySelector
+										disabled={ isPendingDelete }
+										quantity={ quantity }
+										minimum={ quantityLimits.minimum }
+										maximum={ quantityLimits.maximum }
+										step={ quantityLimits.multiple_of }
+										onChange={ ( newQuantity ) => {
+											setItemQuantity( newQuantity );
 											dispatchStoreEvent(
-												'cart-remove-item',
+												'cart-set-item-quantity',
 												{
 													product: lineItem,
-													quantity,
+													quantity: newQuantity,
 												}
 											);
-											speak(
-												sprintf(
-													/* translators: %s refers to the item name in the cart. */
-													__(
-														'%s has been removed from your cart.',
-														'woo-gutenberg-products-block'
-													),
-													name
-												)
-											);
 										} }
-										disabled={ isPendingDelete }
-									>
-										<svg
-											xmlns="http://www.w3.org/2000/svg"
-											width={ 10 }
-											height={ 10 }
-											viewBox="0 0 10 10"
-											fill="none"
-										>
-											<line
-												x1="1.20231"
-												y1="8.9445"
-												x2="8.81731"
-												y2="1.3295"
-												stroke="#1A1A1A"
-												strokeWidth="1.61538"
-											/>
-											<line
-												x1="1.26644"
-												y1="1.32731"
-												x2="8.88143"
-												y2="8.94231"
-												stroke="#1A1A1A"
-												strokeWidth="1.61538"
-											/>
-										</svg>
-									</button>
+										itemName={ name }
+									/>
 								) }
-							</div>
+
+							{ fullPage && (
+								<ProductPrice
+									currency={ totalsCurrency }
+									format={ productPriceFormat }
+									price={ subtotalPrice.getAmount() }
+								/>
+							) }
+							{ showRemoveItemLink && (
+								<button
+									className="wc-block-cart-item__remove-link"
+									aria-label={ sprintf(
+										/* translators: %s refers to the item's name in the cart. */
+										__(
+											'Remove %s from cart',
+											'woo-gutenberg-products-block'
+										),
+										name
+									) }
+									onClick={ () => {
+										onRemove();
+										removeItem();
+										dispatchStoreEvent(
+											'cart-remove-item',
+											{
+												product: lineItem,
+												quantity,
+											}
+										);
+										speak(
+											sprintf(
+												/* translators: %s refers to the item name in the cart. */
+												__(
+													'%s has been removed from your cart.',
+													'woo-gutenberg-products-block'
+												),
+												name
+											)
+										);
+									} }
+									disabled={ isPendingDelete }
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width={ 10 }
+										height={ 10 }
+										viewBox="0 0 10 10"
+										fill="none"
+									>
+										<line
+											x1="1.20231"
+											y1="8.9445"
+											x2="8.81731"
+											y2="1.3295"
+											stroke="#1A1A1A"
+											strokeWidth="1.61538"
+										/>
+										<line
+											x1="1.26644"
+											y1="1.32731"
+											x2="8.88143"
+											y2="8.94231"
+											stroke="#1A1A1A"
+											strokeWidth="1.61538"
+										/>
+									</svg>
+								</button>
+							) }
 						</div>
 					</div>
 				</td>

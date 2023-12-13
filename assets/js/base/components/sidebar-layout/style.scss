@@ -1,5 +1,7 @@
 .wc-block-components-sidebar-layout {
 	display: flex;
+	align-items: flex-start;
+	gap: 20px;
 	flex-wrap: wrap;
 	margin: 0 auto $gap;
 	position: relative;
@@ -11,16 +13,20 @@
 	.wc-block-components-main {
 		box-sizing: border-box;
 		margin: 0;
-		padding-right: math.percentage(math.div($gap-largest, 1060px)); // ~1060px is the default width of the content area in Storefront.
-		width: 65%;
+		width: calc(65% - 10px);
+		padding: 20px;
+		border-radius: 12px;
+		box-shadow: 0px 7px 17px 0px rgba(0, 0, 0, 0.05);
 	}
 }
 
 .wc-block-components-sidebar {
 	box-sizing: border-box;
 	margin: 0;
-	padding-left: math.percentage(math.div($gap-large, 1060px));
-	width: 35%;
+	padding: 20px;
+	width: calc(35% - 10px);
+	border-radius: 12px;
+	box-shadow: 0px 7px 17px 0px rgba(0, 0, 0, 0.05);
 
 	.wc-block-components-panel > h2 {
 		@include font-size(regular);
@@ -46,21 +52,21 @@
 	}
 }
 
-.is-large {
-	.wc-block-components-sidebar {
-		.wc-block-components-totals-item,
-		.wc-block-components-panel,
-		.wc-block-components-totals-coupon {
-			padding-left: $gap;
-			padding-right: $gap;
-		}
-		.wc-block-components-panel {
-			.wc-block-components-totals-item {
-				padding: 0;
-			}
-		}
-	}
-}
+// .is-large {
+// 	.wc-block-components-sidebar {
+// 		.wc-block-components-totals-item,
+// 		.wc-block-components-panel,
+// 		.wc-block-components-totals-coupon {
+// 			padding-left: $gap;
+// 			padding-right: $gap;
+// 		}
+// 		.wc-block-components-panel {
+// 			.wc-block-components-totals-item {
+// 				padding: 0;
+// 			}
+// 		}
+// 	}
+// }
 
 .wc-block-components-sidebar .wc-block-components-panel > h2 {
 	@include reset-typography();
