@@ -23,23 +23,23 @@ const getRatingCount = ( product: ProductResponseItem ) => {
 const ReviewsCount = ( props: { reviews: number } ): JSX.Element => {
 	const { reviews } = props;
 
-	const reviewsCount = reviews
-		? sprintf(
-				/* translators: %s is referring to the total of reviews for a product */
-				_n(
-					'(%s customer review)',
-					'(%s customer reviews)',
-					reviews,
-					'woo-gutenberg-products-block'
-				),
-				reviews
-		  )
-		: __( '(X customer reviews)', 'woo-gutenberg-products-block' );
+	// const reviewsCount = reviews
+	// 	? sprintf(
+	// 			/* translators: %s is referring to the total of reviews for a product */
+	// 			_n(
+	// 				'(%s customer review)',
+	// 				'(%s customer reviews)',
+	// 				reviews,
+	// 				'woo-gutenberg-products-block'
+	// 			),
+	// 			reviews
+	// 	  )
+	// 	: __( '(X customer reviews)', 'woo-gutenberg-products-block' );
 
 	return (
 		<span className="wc-block-components-product-rating-counter__reviews_count">
 			<Disabled>
-				<a href="/">{ reviewsCount }</a>
+				<a href="/">{ reviews }</a>
 			</Disabled>
 		</span>
 	);
@@ -78,7 +78,7 @@ export const Block = (
 		return (
 			<div className={ className } style={ styleProps.style }>
 				<div className="wc-block-components-product-rating-counter__container">
-					<ReviewsCount reviews={ reviews } />
+					{/* <ReviewsCount reviews={ reviews } /> */}
 				</div>
 			</div>
 		);
