@@ -2,6 +2,7 @@
  * External dependencies
  */
 import { registerBlockType } from '@wordpress/blocks';
+import { isExperimentalBuild } from '@woocommerce/block-settings';
 
 /**
  * Internal dependencies
@@ -15,9 +16,11 @@ import './inner-blocks/product-gallery-large-image-next-previous';
 import './inner-blocks/product-gallery-pager';
 import './inner-blocks/product-gallery-thumbnails';
 
-// @ts-expect-error: `metadata` currently does not have a type definition in WordPress core.
-registerBlockType( metadata, {
-	icon,
-	edit: Edit,
-	save: Save,
-} );
+if ( isExperimentalBuild() ) {
+	// @ts-expect-error: `metadata` currently does not have a type definition in WordPress core.
+	registerBlockType( metadata, {
+		icon,
+		edit: Edit,
+		save: Save,
+	} );
+}
