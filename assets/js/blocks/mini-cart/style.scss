@@ -13,6 +13,7 @@
 	border: none;
 	color: inherit;
 	display: flex;
+	gap: 4px;
 	flex-direction: column;
 	font-size: inherit;
 	font-family: inherit;
@@ -38,6 +39,7 @@
 	}
 
 }
+
 @media screen and (max-width: 480px) {
 	.wc-block-mini-cart__button::after {
 		font-size: 0;
@@ -95,6 +97,7 @@
 		}
 	}
 }
+
 :where(.wp-block-woocommerce-mini-cart-contents) {
 	background: #fff;
 }
@@ -118,8 +121,7 @@
 	justify-content: space-between;
 }
 
-.wp-block-woocommerce-empty-mini-cart-contents-block
-.wc-block-mini-cart__empty-cart-wrapper {
+.wp-block-woocommerce-empty-mini-cart-contents-block .wc-block-mini-cart__empty-cart-wrapper {
 	overflow-y: auto;
 	padding: $gap-largest $gap $gap;
 }
@@ -225,6 +227,17 @@
 			padding-top: $gap-smaller;
 			padding-bottom: $gap-smaller;
 
+			.wc-block-cart-item__product,
+			.wc-block-cart-item__quantity {
+				padding: 0 !important;
+			}
+			.wc-block-cart-item__divider {
+				font-size: 11px;
+				font-style: normal;
+				font-weight: 600;
+				line-height: 130%;
+			}
+
 			&:last-child::after {
 				content: none;
 			}
@@ -250,9 +263,10 @@
 			margin-bottom: 8px;
 		}
 	}
+
 	// First selector for the frontend, second selector for the editor.
 	.wc-block-mini-cart__footer-actions,
-	.wc-block-mini-cart__footer-actions > .block-editor-inner-blocks > .block-editor-block-list__layout {
+	.wc-block-mini-cart__footer-actions>.block-editor-inner-blocks>.block-editor-block-list__layout {
 		display: flex;
 		gap: 8px;
 		margin-top: 28px;

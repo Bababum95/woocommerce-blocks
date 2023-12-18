@@ -9,13 +9,13 @@
 	border-radius: 1em;
 	box-sizing: border-box;
 	display: flex;
-	font-size: 0.875em;
+	font-size: 10px;
 	font-weight: 600;
-	height: math.div(em(20px), 0.875);
+	height: 14px;
 	justify-content: center;
 	left: 100%;
 	margin-left: -44%;
-	min-width: math.div(em(20px), 0.875);
+	min-width:14px;
 	padding: 0 em($gap-smallest);
 	position: absolute;
 	transform: translateY(-50%);

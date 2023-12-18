@@ -40,8 +40,8 @@ const QuantityBadge = ( {
 		<span className="wc-block-mini-cart__quantity-badge">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
-				width={ 22 }
-				height={ 26 }
+				width={ 20 }
+				height={ 24 }
 				viewBox="0 0 22 26"
 				fill="none"
 			>

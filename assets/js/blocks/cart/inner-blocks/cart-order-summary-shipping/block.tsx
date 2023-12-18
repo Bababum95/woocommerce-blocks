@@ -23,7 +23,7 @@ const Block = ( { className }: { className: string } ): JSX.Element | null => {
 					'isShippingCalculatorEnabled',
 					true
 				) }
-				showRateSelector={ true }
+				showRateSelector={ false }
 				values={ cartTotals }
 				currency={ totalsCurrency }
 			/>

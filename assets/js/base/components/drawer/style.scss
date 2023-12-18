@@ -117,13 +117,12 @@ $drawer-animation-duration: 0.3s;
 	background: transparent !important;
 	color: inherit !important;
 	position: absolute !important;
-	top: $gap-small;
-	right: $gap-small;
-	opacity: 0.6;
+	top: 25px;
+	right: 20px;
 	z-index: 2;
 	// Increase clickable area.
-	padding: 1em !important;
-	margin: -1em;
+	padding: 20px !important;
+	margin: -20px;
 
 	&:hover,
 	&:focus,

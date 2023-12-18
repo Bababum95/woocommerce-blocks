@@ -150,19 +150,19 @@ class ProductRating extends AbstractBlock {
 					$label                  = sprintf( __( 'Rated %s out of 5', 'woo-gutenberg-products-block' ), $average_rating );
 					$customer_reviews_count = sprintf(
 						/* translators: %s is referring to the total of reviews for a product */
-						_n(
-							'(%s customer review)',
-							'(%s customer reviews)',
-							$reviews_count,
-							'woo-gutenberg-products-block'
-						),
+						// _n(
+						// 	'(%s customer review)',
+						// 	'(%s customer reviews)',
+						// 	$reviews_count,
+						// 	'woo-gutenberg-products-block'
+						// ),
 						esc_html( $reviews_count )
 					);
 
 					if ( $is_descendent_of_single_product_block ) {
-						$customer_reviews_count = '<a href="' . esc_url( $product_permalink ) . '#reviews">' . $customer_reviews_count . '</a>';
+						$customer_reviews_count = '<a href="' . esc_url( $product_permalink ) . '#reviews">(' . $customer_reviews_count . ')</a>';
 					} elseif ( $is_descendent_of_single_product_template ) {
-						$customer_reviews_count = '<a class="woocommerce-review-link" rel="nofollow" href="#reviews">' . $customer_reviews_count . '</a>';
+						$customer_reviews_count = '<a class="woocommerce-review-link" rel="nofollow" href="#reviews">(' . $customer_reviews_count . ')</a>';
 					}
 
 					$reviews_count_html = sprintf( '<span class="wc-block-components-product-rating__reviews_count">%1$s</span>', $customer_reviews_count );

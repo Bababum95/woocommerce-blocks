@@ -56,7 +56,20 @@ const CloseButtonPortal = ( {
 		? createPortal(
 				<Button
 					className="wc-block-components-drawer__close"
-					icon={ close }
+					icon={
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="18"
+							height="17"
+							viewBox="0 0 18 17"
+							fill="none"
+						>
+							<path
+								d="M14.7047 16.9845L8.52027 10.8001L2.37892 16.9414L0.212944 14.7754L6.35429 8.6341L0.141341 2.42116L2.45592 0.106582L8.66886 6.31953L14.7793 0.209045L16.9453 2.37502L10.8348 8.48551L17.0193 14.6699L14.7047 16.9845Z"
+								fill="#1A1A1A"
+							/>
+						</svg>
+					}
 					onClick={ onClick }
 					label={ __( 'Close', 'woo-gutenberg-products-block' ) }
 					showTooltip={ false }

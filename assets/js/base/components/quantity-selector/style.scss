@@ -53,13 +53,12 @@
 
 	.wc-block-components-quantity-selector__button {
 		@include reset-button;
-		@include font-size(regular, 0.9em);
 		color: currentColor;
 		cursor: pointer;
 		font-style: normal;
-		font-weight: normal;
+		font-weight: 700;
+		font-size: 15px;
 		min-width: 25px;
-		opacity: 0.6;
 		text-align: center;
 		text-decoration: none;
 

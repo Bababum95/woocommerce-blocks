@@ -25,7 +25,6 @@ const TotalsItem = ( {
 	currency,
 	label,
 	value,
-	description,
 }: TotalsItemProps ): ReactElement => {
 	return (
 		<div
@@ -38,9 +37,6 @@ const TotalsItem = ( {
 				{ label }
 			</span>
 			<TotalsItemValue value={ value } currency={ currency } />
-			<div className="wc-block-components-totals-item__description">
-				{ description }
-			</div>
 		</div>
 	);
 };

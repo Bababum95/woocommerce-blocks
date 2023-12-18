@@ -258,6 +258,13 @@ const CartLineItemRow: React.ForwardRefExoticComponent<
 								format={ subtotalPriceFormat }
 							/>
 						</div>
+						{ ! fullPage &&
+							! soldIndividually &&
+							!! quantityLimits.editable && (
+								<span className="wc-block-cart-item__divider">
+									x
+								</span>
+							) }
 						<div className="wc-block-cart-item__quantity">
 							{ ! soldIndividually &&
 								!! quantityLimits.editable && (

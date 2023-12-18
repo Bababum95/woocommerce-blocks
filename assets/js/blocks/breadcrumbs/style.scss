@@ -1,9 +1,30 @@
 .woocommerce.wc-block-breadcrumbs {
 	font-size: inherit;
-}
-.woocommerce.woocommerce-shop .wc-block-breadcrumbs {
+	margin-top: 30px;
+
 	.woocommerce-breadcrumb {
 		margin: auto;
 		display: block;
+		color: #1A1A1A;
+		font-size: 14px;
+		font-style: normal;
+		font-weight: 600;
+		line-height: 140%;
+	
+		a {
+			color: #838383;
+			font-size: 14px;
+			font-style: normal;
+			font-weight: 600;
+			line-height: 140%;
+	
+			&:hover {
+				color: #9E58F7;
+			}
+		}
+	}
+
+	@media screen and (max-width: 700px) {
+		margin-top: 20px;
 	}
 }

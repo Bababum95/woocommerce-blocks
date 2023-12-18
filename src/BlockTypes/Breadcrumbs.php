@@ -29,7 +29,6 @@ class Breadcrumbs extends AbstractBlock {
 		ob_start();
 		woocommerce_breadcrumb();
 		$breadcrumb = ob_get_clean();
-
 		if ( ! $breadcrumb ) {
 			return;
 		}
