@@ -210,6 +210,7 @@ const ProductCategoriesBlock = ( {
 					block={ name }
 					attributes={ attributes }
 					EmptyResponsePlaceholder={ EmptyPlaceholder }
+					className="inner-slider"
 				/>
 			</Disabled>
 		</div>

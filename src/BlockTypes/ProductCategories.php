@@ -95,9 +95,11 @@ class ProductCategories extends AbstractDynamicBlock {
 		$classes = $this->get_container_classes( $attributes ) . ' ' . $classes_and_styles['classes'];
 		$styles  = $classes_and_styles['styles'];
 
-		$output  = '<div class="wp-block-woocommerce-product-categories ' . esc_attr( $classes ) . '" style="' . esc_attr( $styles ) . '">';
-		$output .= ! empty( $attributes['isDropdown'] ) ? $this->renderDropdown( $categories, $attributes, $uid ) : $this->renderList( $categories, $attributes, $uid );
-		$output .= '</div>';
+		// $output  = '<div class="wp-block-woocommerce-product-categories ' . esc_attr( $classes ) . '" style="' . esc_attr( $styles ) . '">';
+		$output = ! empty( $attributes['isDropdown'] )
+					? $this->renderDropdown( $categories, $attributes, $uid )
+					: $this->renderList( $categories, $attributes, $uid );
+		// $output .= '</div>';
 
 		return $output;
 	}
@@ -320,7 +322,9 @@ class ProductCategories extends AbstractDynamicBlock {
 		if ( ! empty( $attributes['hasImage'] ) ) {
 			$classes[] = 'wc-block-product-categories-list--has-images';
 		}
-		$output = '<ul class="' . esc_attr( implode( ' ', $classes ) ) . '">' . $this->renderListItems( $categories, $attributes, $uid, $depth ) . '</ul>';
+		// $output = '<ul class="' . esc_attr( implode( ' ', $classes ) ) . '">';
+		$output = $this->renderListItems( $categories, $attributes, $uid, $depth );
+		// $output .= '</ul>';
 
 		return $output;
 	}
@@ -343,14 +347,14 @@ class ProductCategories extends AbstractDynamicBlock {
 
 		foreach ( $categories as $category ) {
 			$output .= '
-				<li class="wc-block-product-categories-list-item">
+				<article class="wc-block-product-categories-list-item">
 					<a style="' . esc_attr( $link_color_style ) . '" href="' . esc_attr( get_term_link( $category->term_id, 'product_cat' ) ) . '">'
 						. $this->get_image_html( $category, $attributes )
 						. '<span class="wc-block-product-categories-list-item__name">' . esc_html( $category->name ) . '</span>'
 					. '</a>'
 					. $this->getCount( $category, $attributes )
 					. ( ! empty( $category->children ) ? $this->renderList( $category->children, $attributes, $uid, $depth + 1 ) : '' ) . '
-				</li>
+				</article>
 			';
 		}
 
