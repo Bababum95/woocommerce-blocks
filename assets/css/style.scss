@@ -100,7 +100,7 @@
 	.star-rating {
 		overflow: hidden;
 		position: relative;
-		width: 5.3em;
+		width: 109px;
 		height: 1.618em;
 		line-height: 1.618;
 		font-size: 1em;
@@ -111,7 +111,7 @@
 		text-align: left;
 
 		&::before {
-			content: "\53\53\53\53\53";
+			content: "S S S S S";
 			top: 0;
 			left: 0;
 			right: 0;
@@ -128,7 +128,7 @@
 			padding-top: 1.5em;
 		}
 		span::before {
-			content: "\53\53\53\53\53";
+			content: "S S S S S";
 			color: inherit;
 			top: 0;
 			left: 0;

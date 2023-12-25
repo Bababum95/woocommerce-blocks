@@ -354,6 +354,11 @@ $outside-image-max-width: calc(100% - (2 * $outside-image-offset));
 
 		.wc-block-product-gallery-thumbnails__thumbnail {
 			margin: 0;
+			flex-shrink: 0;
+		}
+
+		&::-webkit-scrollbar {
+			display: none;
 		}
 	}
 }

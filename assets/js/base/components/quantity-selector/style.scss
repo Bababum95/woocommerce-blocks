@@ -59,8 +59,15 @@
 		font-weight: 700;
 		font-size: 15px;
 		min-width: 25px;
-		text-align: center;
 		text-decoration: none;
+
+		&.wc-block-components-quantity-selector__button--minus {
+			text-align: right;
+		}
+
+		&.wc-block-components-quantity-selector__button--plus {
+			text-align: left;
+		}
 
 		&:hover,
 		&:focus {

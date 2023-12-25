@@ -12,6 +12,35 @@ type Props = {
 	className?: string;
 };
 
+interface ITextProps {
+	children: JSX.Element;
+	delivery: 'free' | 'paid' | 'none';
+}
+
+const textContent = {
+	top: {
+		paid: '👋 Du hast',
+		none: '👋 Du bist',
+	},
+	bottom: {
+		paid: 'Artikel im Warenkorb',
+		none: 'von der Mindestbestellmenge',
+	},
+};
+
+const Text = ( { children, delivery }: ITextProps ) => {
+	if ( delivery === 'free' ) {
+		return <span>Deine Bestellung ist versandkostenfrei! 🥳</span>;
+	}
+	return (
+		<span>
+			{ textContent.top[ delivery ] }
+			{ children }
+			{ textContent.bottom[ delivery ] }
+		</span>
+	);
+};
+
 const Block = ( props: Props ): JSX.Element => {
 	const { cartTotals } = useStoreCart();
 	const styleProps = useStyleProps( props );
@@ -22,20 +51,30 @@ const Block = ( props: Props ): JSX.Element => {
 	const totalalue = subTotal / 10 ** cartTotals.currency_minor_unit;
 	// 45 is the max value of the progress bar
 	const maxValue = 45;
+	const subTotalValue = Number( subTotal.toString().slice( 0, -2 ) );
 
 	return (
 		<div
 			className={ classNames( props.className, styleProps.className ) }
 			style={ styleProps.style }
 		>
-			<span>
-				👋 Du bist
+			<Text
+				delivery={
+					// eslint-disable-next-line no-nested-ternary
+					subTotalValue > 39
+						? 'free'
+						: subTotalValue >= 20
+						? 'paid'
+						: 'none'
+				}
+			>
 				<TotalsItemValue
-					value={ subTotal }
+					value={
+						subTotal < 2000 ? 2000 - subTotal : 3900 - subTotal
+					}
 					currency={ getCurrencyFromPriceResponse( cartTotals ) }
 				/>
-				von der kostenlosen Lieferung entfernt.
-			</span>
+			</Text>
 			<div className="wp-block-woocommerce-mini-cart-title-items-counter-block__progresbar">
 				<input
 					className="wp-block-woocommerce-mini-cart-title-items-counter-block__progresbar-status"
