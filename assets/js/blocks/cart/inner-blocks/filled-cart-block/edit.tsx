@@ -26,6 +26,7 @@ export const Edit = ( { clientId }: { clientId: string } ): JSX.Element => {
 	const defaultTemplate = [
 		[ 'woocommerce/cart-items-block', {}, [] ],
 		[ 'woocommerce/cart-totals-block', {}, [] ],
+		[ 'woocommerce/cart-cross-sells-block', {}, [] ],
 	] as TemplateArray;
 
 	useForcedLayout( {
@@ -46,7 +47,6 @@ export const Edit = ( { clientId }: { clientId: string } ): JSX.Element => {
 				<InnerBlocks
 					allowedBlocks={ allowedBlocks }
 					template={ defaultTemplate }
-					templateLock="insert"
 				/>
 			</SidebarLayout>
 		</div>

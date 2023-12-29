@@ -76,7 +76,8 @@ const AddToCartButton = ( {
 			} );
 		};
 	} else {
-		buttonProps.onClick = async () => {
+		buttonProps.onClick = async (evt) => {
+			evt.preventDefault();
 			await addToCart();
 			dispatchStoreEvent( 'cart-add-item', {
 				product,

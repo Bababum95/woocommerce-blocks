@@ -50,7 +50,7 @@ const Block = ( props: Props ): JSX.Element => {
 		: parseInt( cartTotals.total_items, 10 );
 	const totalalue = subTotal / 10 ** cartTotals.currency_minor_unit;
 	// 45 is the max value of the progress bar
-	const maxValue = 45;
+	const maxValue = 78;
 	const subTotalValue = Number( subTotal.toString().slice( 0, -2 ) );
 
 	return (

@@ -38,6 +38,7 @@ addClassToBody();
 const ALLOWED_BLOCKS = [
 	'woocommerce/filled-cart-block',
 	'woocommerce/empty-cart-block',
+	'woocommerce/cart-cross-sells-block',
 ];
 
 export const Edit = ( { clientId, className, attributes, setAttributes } ) => {
@@ -106,7 +107,6 @@ export const Edit = ( { clientId, className, attributes, setAttributes } ) => {
 								<InnerBlocks
 									allowedBlocks={ ALLOWED_BLOCKS }
 									template={ defaultTemplate }
-									templateLock="insert"
 								/>
 							</CartProvider>
 						</SlotFillProvider>

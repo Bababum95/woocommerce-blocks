@@ -31,7 +31,13 @@ const CartCrossSellsProductList = ( {
 		);
 	} );
 
-	return <div>{ crossSellsProducts }</div>;
+	return (
+		<div className="wp-block-woocommerce-cart-cross-sells-block__products-wrapper">
+			<div className="wp-block-woocommerce-cart-cross-sells-block__products">
+				{ crossSellsProducts }
+			</div>
+		</div>
+	);
 };
 
 export default CartCrossSellsProductList;
