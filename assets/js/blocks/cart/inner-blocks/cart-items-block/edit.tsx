@@ -33,7 +33,11 @@ export const Edit = ( { clientId }: Props ): JSX.Element => {
 	return (
 		<Main { ...blockProps }>
 			<InnerBlocks
-				allowedBlocks={ allowedBlocks }
+				allowedBlocks={ [
+					...allowedBlocks,
+					'core/group',
+					'core/shortcode',
+				] }
 				template={ defaultTemplate }
 				templateLock={ false }
 				renderAppender={ InnerBlocks.ButtonBlockAppender }

@@ -1,6 +1,16 @@
 .wc-block-components-totals-wrapper {
-	// @include with-translucent-border(1px 0 0);
-	padding: 6px 0;
+	@include with-translucent-border(0 0 1px, 1);
+	padding: 12px 0;
+
+	&::after {
+		border-color: #F2F2F2;
+	}
+
+	&:has(.wc-block-components-totals-footer-item) {
+		&::after {
+			border-bottom-width: 0;
+		}
+	}
 
 	&.has-bottom-border {
 		&::after {

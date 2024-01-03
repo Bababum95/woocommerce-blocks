@@ -1,4 +1,46 @@
 .wc-block-components-totals-coupon {
+	&-link {
+		color: #838383;
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		font-size: 16px;
+		font-style: normal;
+		font-weight: 700;
+		line-height: 130%;
+
+		&-icon {
+			background-color: #838383;
+			width: 19px;
+			height: 19px;
+			border-radius: 50%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			position: relative;
+
+			&::after,
+			&::before {
+				content: "";
+				position: absolute;
+				width: 55%;
+				height: 2px;
+				background-color: #FFF;
+			}
+
+			&::before {
+				transform: rotate(90deg);
+			}
+		}
+
+		&:hover {
+			color: #1a1a1a;
+
+			.wc-block-components-totals-coupon-link-icon {
+				background-color: #1a1a1a;
+			}
+		}
+	}
 
 	.wc-block-components-panel__button {
 		margin-top: 0;
@@ -39,4 +81,3 @@
 	flex-direction: column;
 	position: relative;
 }
-
