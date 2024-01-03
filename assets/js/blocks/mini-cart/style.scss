@@ -172,7 +172,7 @@
 			border: 2px solid #fff;
 			top: 8px;
 			left: 50%;
-			z-index: 3;
+			z-index: 2;
 		}
 
 		&-status {
@@ -204,7 +204,7 @@
 				height: 25px;
 				width: 25px;
 				background-image: url(./cloud.svg);
-				z-index: 3;
+				z-index: 5;
 				position: relative
 			}
 
@@ -267,7 +267,15 @@
 		&_total {
 			font-weight: 700;
 			font-size: 18px;
-			margin-bottom: 8px;
+			margin-bottom: 2px;
+		}
+
+		&_tax {
+			font-size: 13px;
+			font-style: normal;
+			font-weight: 400;
+			line-height: 130%;
+			color: #838383;
 		}
 	}
 
@@ -278,18 +286,36 @@
 		gap: 8px;
 		margin-top: 28px;
 
-		.wc-block-components-button,
-		.wp-block-button,
-		.wp-block-woocommerce-mini-cart-cart-button-block,
 		.wp-block-woocommerce-mini-cart-checkout-button-block {
 			flex-grow: 1;
 			display: inline-flex;
 			background-color: #1a1a1a;
+			font-size: 16px;
+			font-style: normal;
+			font-weight: 600;
+			line-height: 130%;
 
 			&:hover {
 				background-color: #9E58F7;
 			}
 		}
+		
+		.wp-block-woocommerce-mini-cart-cart-button-block {
+			flex-grow: 1;
+			display: inline-flex;
+			background-color: #FFFFFF;
+			color: #1a1a1a;
+			font-size: 16px;
+			font-style: normal;
+			font-weight: 600;
+			line-height: 130%;
+
+			&:hover {
+				background-color: #1a1a1a;
+				color: #FFFFFF;
+			}
+		}
+
 	}
 
 	.wc-block-components-payment-method-icons {

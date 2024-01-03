@@ -348,9 +348,13 @@ class ProductCategories extends AbstractDynamicBlock {
 		foreach ( $categories as $category ) {
 			$output .= '
 				<article class="wc-block-product-categories-list-item">
-					<a style="' . esc_attr( $link_color_style ) . '" href="' . esc_attr( get_term_link( $category->term_id, 'product_cat' ) ) . '">'
+					<a
+						style="' . esc_attr( $link_color_style ) . '"
+						href="' . esc_attr( get_term_link( $category->term_id, 'product_cat' ) ) . '"
+						title="' . esc_attr( $category->name ) . '"
+					>'
 						. $this->get_image_html( $category, $attributes )
-						. '<span class="wc-block-product-categories-list-item__name">' . esc_html( $category->name ) . '</span>'
+						// . '<span class="wc-block-product-categories-list-item__name">' . esc_html( $category->name ) . '</span>'
 					. '</a>'
 					. $this->getCount( $category, $attributes )
 					. ( ! empty( $category->children ) ? $this->renderList( $category->children, $attributes, $uid, $depth + 1 ) : '' ) . '

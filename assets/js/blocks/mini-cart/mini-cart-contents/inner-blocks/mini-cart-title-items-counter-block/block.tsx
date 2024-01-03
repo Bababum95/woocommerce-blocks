@@ -61,7 +61,7 @@ const Block = ( props: Props ): JSX.Element => {
 			<Text
 				delivery={
 					// eslint-disable-next-line no-nested-ternary
-					subTotalValue > 39
+					subTotalValue >= 39
 						? 'free'
 						: subTotalValue >= 20
 						? 'paid'
