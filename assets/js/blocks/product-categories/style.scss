@@ -17,21 +17,21 @@
 	box-shadow: 0px 7px 17px 0px rgba(0, 0, 0, 0.05);
 	overflow: hidden;
 
-	// a {
-	// 	display: flex;
-	// 	flex-direction: column;
-	// 	align-items: center;
-	// 	padding: 20px 20px 17px;
-	// 	gap: 15px;
-	// }
+	a {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding: 20px 20px 17px;
+		gap: 15px;
+	}
 
-	// &__name {
-	// 	text-align: center;
-	// 	font-size: 15px;
-	// 	font-style: normal;
-	// 	font-weight: 600;
-	// 	line-height: normal;
-	// }
+	&__name {
+		text-align: center;
+		font-size: 15px;
+		font-style: normal;
+		font-weight: 600;
+		line-height: normal;
+	}
 
 	&__image {
 		img {

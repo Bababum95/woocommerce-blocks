@@ -346,15 +346,20 @@ class ProductCategories extends AbstractDynamicBlock {
 		$link_color_style = isset( $link_color_class_and_style['style'] ) ? $link_color_class_and_style['style'] : '';
 
 		foreach ( $categories as $category ) {
+			$category_id = $category->term_id;
+			$category_name = get_field('short_name', 'category_' . $category_id);
+			if( empty($category_name) ) {
+				$category_name = $category->name;
+			}
 			$output .= '
 				<article class="wc-block-product-categories-list-item">
 					<a
 						style="' . esc_attr( $link_color_style ) . '"
-						href="' . esc_attr( get_term_link( $category->term_id, 'product_cat' ) ) . '"
-						title="' . esc_attr( $category->name ) . '"
+						href="' . esc_attr( get_term_link( $category_id, 'product_cat' ) ) . '"
+						title="' . esc_attr( $category_name ) . '"
 					>'
 						. $this->get_image_html( $category, $attributes )
-						// . '<span class="wc-block-product-categories-list-item__name">' . esc_html( $category->name ) . '</span>'
+						. '<span class="wc-block-product-categories-list-item__name">' . esc_html( $category_name ) . '</span>'
 					. '</a>'
 					. $this->getCount( $category, $attributes )
 					. ( ! empty( $category->children ) ? $this->renderList( $category->children, $attributes, $uid, $depth + 1 ) : '' ) . '
