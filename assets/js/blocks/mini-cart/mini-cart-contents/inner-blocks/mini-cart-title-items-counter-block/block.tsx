@@ -18,14 +18,8 @@ interface ITextProps {
 }
 
 const textContent = {
-	top: {
-		paid: '👋 Du hast',
-		none: '👋 Du bist',
-	},
-	bottom: {
-		paid: 'Artikel im Warenkorb',
-		none: 'von der Mindestbestellmenge',
-	},
+	paid: 'von der kostenlosen Lieferung entfernt',
+	none: 'von der Mindestbestellmenge',
 };
 
 const Text = ( { children, delivery }: ITextProps ) => {
@@ -34,9 +28,9 @@ const Text = ( { children, delivery }: ITextProps ) => {
 	}
 	return (
 		<span>
-			{ textContent.top[ delivery ] }
+			👋 Du bist
 			{ children }
-			{ textContent.bottom[ delivery ] }
+			{ textContent[ delivery ] }
 		</span>
 	);
 };
