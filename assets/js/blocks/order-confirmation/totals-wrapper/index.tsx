@@ -12,6 +12,7 @@ import { totals } from '@woocommerce/icons';
 import edit from './edit';
 import metadata from './block.json';
 import attributes from './attributes';
+import './style.scss';
 
 registerBlockType(
 	metadata as BlockConfiguration,

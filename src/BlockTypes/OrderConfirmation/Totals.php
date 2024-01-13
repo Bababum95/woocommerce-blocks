@@ -130,7 +130,8 @@ class Totals extends AbstractOrderConfirmationBlock {
 		$row_class = apply_filters( 'woocommerce_order_item_class', 'woocommerce-table__line-item order_item', $item, $order );
 		// phpcs:ignore WooCommerce.Commenting.CommentHooks.MissingHookComment
 		$product_permalink = apply_filters( 'woocommerce_order_item_permalink', $is_visible ? $product->get_permalink( $item ) : '', $item, $order );
-
+		$product_name = $item->get_name();
+		$item_image = $this->get_product_image($product, $product_name);
 		// phpcs:ignore WooCommerce.Commenting.CommentHooks.MissingHookComment
 		$item_name    = apply_filters(
 			'woocommerce_order_item_name',
@@ -138,6 +139,7 @@ class Totals extends AbstractOrderConfirmationBlock {
 			$item,
 			$is_visible
 		);
+		$item_price = number_format($product->get_price(), 2);
 		$qty          = $item->get_quantity();
 		$refunded_qty = $order->get_qty_refunded_for_item( $item_id );
 		$qty_display  = $refunded_qty ? '<del>' . esc_html( $qty ) . '</del> <ins>' . esc_html( $qty - ( $refunded_qty * -1 ) ) . '</ins>' : esc_html( $qty );
@@ -151,18 +153,45 @@ class Totals extends AbstractOrderConfirmationBlock {
 		return '
 			<tr class="' . esc_attr( $row_class ) . '">
 				<td class="wc-block-order-confirmation-totals__product">
-					' . wp_kses_post( $item_name ) . '&nbsp;
-					' . wp_kses_post( $item_qty ) . '
-					' . $this->get_hook_content( 'woocommerce_order_item_meta_start', [ $item_id, $item, $order, false ] ) . '
-					' . wc_display_item_meta( $item, [ 'echo' => false ] ) . '
-					' . $this->get_hook_content( 'woocommerce_order_item_meta_end', [ $item_id, $item, $order, false ] ) . '
-					' . $this->render_order_details_table_item_purchase_note( $order, $product ) . '
+					<div class="wc-block-order-confirmation-totals__product-image">
+						' . $item_image . '
+					</div>
+					<div class="wc-block-order-confirmation-totals__product-details">
+						' . wp_kses_post($item_name) . '
+						<p class="wc-block-order-confirmation-totals__product-price">
+							' . $item_price . ' €' . '
+							' . wp_kses_post($item_qty) . '
+						</p>
+						' . $this->render_order_details_table_item_purchase_note($order, $product) . '
+					</div>
 				</td>
 				<td class="wc-block-order-confirmation-totals__total">
-					' . wp_kses_post( $order->get_formatted_line_subtotal( $item ) ) . '
+					' . wp_kses_post($order->get_formatted_line_subtotal($item)) . '
 				</td>
 			</tr>
 		';
+	}
+
+	protected function get_product_image($product, $title) {
+		$image = $product->get_image(
+			'woocommerce_thumbnail',
+			array(
+				'alt'         => $title,
+				'data-testid' => 'product-image',
+				'title'       => $title,
+				'loading'     => 'lazy',
+				'onerror'     => "this.onerror=null;this.src='" . wc_placeholder_img_src() . "';",
+			)
+		);
+
+		if (empty($image)) {
+			$image = '<img
+						src="' . wc_placeholder_img_src() . '"
+						alt="' . esc_attr($title) . '"
+					/>';
+		}
+
+		return $image;
 	}
 
 	/**
@@ -193,18 +222,33 @@ class Totals extends AbstractOrderConfirmationBlock {
 		$total_rows = array_diff_key(
 			$order->get_order_item_totals(),
 			array(
-				'cart_subtotal'  => '',
+				// 'cart_subtotal'  => '',
 				'payment_method' => '',
 			)
 		);
 
-		foreach ( $total_rows as $total ) {
+		foreach ($total_rows as $total) {
+			preg_match('/<small class="includes_tax">(.*?)<\/small>/', $total['value'], $matches);
+			$includes_tax = isset($matches[0]) ? $matches[0] : '';
+			$value = preg_replace('/<small class="includes_tax">(.*?)<\/small>/', '', $total['value']);
+
 			$return .= '
-				<tr>
+				<tr class="' . ( empty($includes_tax) ? '' : 'total' ) . '">
 					<th class="wc-block-order-confirmation-totals__label" scope="row">' . esc_html( $total['label'] ) . '</th>
-					<td class="wc-block-order-confirmation-totals__total">' . wp_kses_post( $total['value'] ) . '</td>
+					<td class="wc-block-order-confirmation-totals__total">' . wp_kses_post( $value ) . '</td>
 				</tr>
 			';
+
+			if (!empty($includes_tax)) {
+				preg_match('/<span class="woocommerce-Price-amount amount">(.*)<\/span>/', $includes_tax, $matches);
+				$includes_tax = isset($matches[1]) ? $matches[1] : '';
+				$return .= '
+					<tr>
+						<th class="wc-block-order-confirmation-totals__label" scope="row">inkl. 19 % MwSt.</th>
+						<td class="wc-block-order-confirmation-totals__total">' . wp_kses_post($includes_tax) . '</td>
+					<tr>
+				';
+			}
 		}
 
 		return $return;

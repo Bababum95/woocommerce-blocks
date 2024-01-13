@@ -34,7 +34,7 @@ class TotalsWrapper extends AbstractOrderConfirmationBlock {
 	 *
 	 * @return null
 	 */
-	protected function get_block_type_style() {
-		return null;
-	}
+	// protected function get_block_type_style() {
+	// 	return null;
+	// }
 }

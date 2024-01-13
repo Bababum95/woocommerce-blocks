@@ -1,9 +1,11 @@
 .editor-styles-wrapper .wc-block-order-confirmation-summary,
 .wc-block-order-confirmation-summary {
-	margin-top: $gap-largest;
-	margin-bottom: $gap-largest;
-	border-radius: $universal-border-radius;
+	padding: 40px 60px;
+	border-radius: 12px;
+	box-shadow: 0px 6.906px 17.266px 0px rgba(0, 0, 0, 0.05);
+	margin-bottom: 12px;
 }
+
 .wc-block-order-confirmation-summary {
 	ul {
 		list-style: none outside;
@@ -16,12 +18,22 @@
 		justify-content: space-between;
 
 		li {
-			> .wc-block-order-confirmation-summary-list-item__key {
-				font-weight: bold;
+			display: flex;
+			flex-direction: column;
+			gap: 4px;
+			
+			>.wc-block-order-confirmation-summary-list-item__key {
+				font-size: 16px;
+				font-style: normal;
+				font-weight: 400;
+				line-height: 130%;
 			}
-			> .wc-block-order-confirmation-summary-list-item__value {
-				font-weight: inherit;
-				display: block;
+
+			>.wc-block-order-confirmation-summary-list-item__value {
+				font-size: 22px;
+				font-style: normal;
+				font-weight: 700;
+				line-height: 130%;
 			}
 		}
 
@@ -29,8 +41,10 @@
 			flex-direction: column;
 		}
 	}
+
 	.woocommerce-verify-email {
 		margin-top: $gap-larger;
+
 		#verify-email {
 			width: 50%;
 		}

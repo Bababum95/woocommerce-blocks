@@ -1,13 +1,23 @@
 .wc-block-order-confirmation-status {
-	margin-top: $gap;
-	margin-bottom: $gap;
+	font-size: 32px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: 120%;
+	padding: 40px 60px;
+	border-radius: 12px;
+	box-shadow: 0px 6.906px 17.266px 0px rgba(0, 0, 0, 0.05);
+	margin-bottom: 12px;
+
 	p {
 		margin-top: 0;
 		margin-bottom: 0;
+		max-width: 476px;
 	}
+
 	&.has-background {
 		padding: $gap;
 	}
+
 	.wc-block-order-confirmation-status__actions {
 		margin-top: $gap;
 

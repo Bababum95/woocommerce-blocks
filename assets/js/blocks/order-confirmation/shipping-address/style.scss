@@ -15,19 +15,19 @@
 	}
 }
 .wc-block-order-confirmation-shipping-address {
-	border: 1px solid $universal-border-light;
-	border-radius: $universal-border-radius;
-	padding: $gap;
+	// border: 1px solid $universal-border-light;
+	// border-radius: $universal-border-radius;
+	// padding: $gap;
 
 	address,
 	p {
 		width: 100% !important;
 		display: block;
 		box-sizing: border-box;
-		margin: 0 0 $gap;
-
-		&:last-child {
-			margin-bottom: 0;
-		}
+		font-size: 16px;
+		font-style: normal;
+		font-weight: 500;
+		line-height: 130%;
+		margin: 0;
 	}
 }

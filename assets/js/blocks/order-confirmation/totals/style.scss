@@ -1,54 +1,122 @@
 .wc-block-order-confirmation-totals {
-	margin-top: $gap-large;
-	margin-bottom: $gap-large * 2;
-	border: 0 !important; // We want styles to appear on table, not on block.
-
 	table {
 		width: 100%;
-		border: 1px solid $universal-border-light;
-		border-spacing: 0;
-		border-radius: $universal-border-radius;
-		border-collapse: collapse;
+		border: none;
+
+		// border-spacing: 0;
+		// border-radius: $universal-border-radius;
+		// border-collapse: collapse;
 		th,
 		td {
-			border: 1px solid $universal-border-light;
-			border-right-width: 0;
-			border-left-width: 0;
-			padding: $gap;
+			// border: 1px solid $universal-border-light;
+			// border-right-width: 0;
+			// border-left-width: 0;
 			margin: 0;
+			vertical-align: top;
 			text-align: left;
 			font-weight: inherit;
 		}
-		thead,
-		tfoot th {
-			font-weight: bold;
+
+		thead {
+			display: none;
 		}
-		tfoot tr:last-child {
+
+		tfoot tr {
+
+			td,
+			th {
+				font-size: 16px;
+				font-style: normal;
+				font-weight: 400;
+				line-height: 130%;
+				padding-bottom: 6px;
+			}
+
+			&.total {
+
+				td,
+				th {
+					font-weight: 700;
+				}
+			}
+		}
+
+		tfoot tr:last-of-type {
+
 			td,
 			th {
 				border-bottom-width: 0;
 			}
 		}
+
 		.wc-block-order-confirmation-totals__total,
 		.wc-block-order-confirmation-totals__note {
 			font-variant-numeric: tabular-nums;
 			text-align: right;
 		}
+
 		.wc-item-meta {
 			list-style-type: none;
 			padding: 0;
 			margin: 0.5em 0 0;
 			font-size: 0.75em;
 
-			li > * {
+			li>* {
 				display: inline-block;
 				margin: 0;
 			}
 		}
 	}
+
+	.wc-block-order-confirmation-totals__product {
+		display: flex;
+		gap: 25px;
+		padding-bottom: 10px;
+
+		&-image {
+			width: 80px;
+			flex-shrink: 0;
+
+			img {
+				border-radius: 12px;
+			}
+		}
+
+		&-details {
+
+			a {
+				font-size: 16px;
+				font-style: normal;
+				font-weight: 400;
+				line-height: 130%;
+			}
+
+		}
+
+		&-price {
+			margin: 8px 0 0;
+			font-size: 14px;
+			font-style: normal;
+			font-weight: 700;
+			line-height: 130%;
+		}
+	}
+
+	tbody .woocommerce-Price-amount {
+		font-size: 16px;
+		font-style: normal;
+		font-weight: 700;
+		line-height: 130%;
+	}
+
+	.wc-block-order-confirmation-totals__total {
+		white-space: nowrap;
+	}
+
 	table[style*="border-width"],
 	table[style*="border-color"] {
-		> *,
+
+		>*,
 		tr,
 		th,
 		td {
@@ -65,6 +133,7 @@
 		td {
 			padding-top: 0;
 		}
+
 		td.wc-block-order-confirmation-totals__product {
 			padding-left: $gap-largest;
 		}
