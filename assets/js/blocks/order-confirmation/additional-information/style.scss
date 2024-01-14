@@ -1,6 +1,15 @@
 .editor-styles-wrapper .wc-block-order-confirmation-additional-information,
 .wc-block-order-confirmation-additional-information {
-	margin-top: $gap-largest;
-	margin-bottom: $gap-largest;
-	border-radius: $universal-border-radius;
+	// margin-top: $gap-largest;
+	// margin-bottom: $gap-largest;
+	// border-radius: $universal-border-radius;
+
+	p {
+		margin: 0;
+		font-size: 16px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 130%;
+		max-width: 476px;
+	}
 }
