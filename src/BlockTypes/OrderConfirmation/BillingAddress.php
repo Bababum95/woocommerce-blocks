@@ -24,7 +24,7 @@ class BillingAddress extends AbstractOrderConfirmationBlock {
 	 * @return string
 	 */
 	protected function render_content( $order, $permission = false, $attributes = [], $content = '' ) {
-		if ( 'full' !== $permission || ! $order->has_billing_address() ) {
+		if ( ! $order->has_billing_address() ) {
 			return '';
 		}
 

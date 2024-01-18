@@ -138,4 +138,22 @@
 			padding-left: $gap-largest;
 		}
 	}
+
+	@media screen and (max-width: 480px) {
+		.wc-block-order-confirmation-totals__product {
+			gap: 12px;
+
+			&-image {
+				width: 70px;
+			}
+
+			&-details a {
+				font-size: 14px;
+			}
+		}
+
+		tbody .woocommerce-Price-amount {
+			font-size: 15px;
+		}
+	}
 }
