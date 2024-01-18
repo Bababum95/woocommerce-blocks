@@ -37,6 +37,18 @@
 				td,
 				th {
 					font-weight: 700;
+					padding-top: 16px;
+				}
+			}
+
+			&.tax {
+				td,
+				th {
+					font-size: 14px;
+					font-style: normal;
+					font-weight: 400;
+					line-height: normal;
+					color: #838383;
 				}
 			}
 		}

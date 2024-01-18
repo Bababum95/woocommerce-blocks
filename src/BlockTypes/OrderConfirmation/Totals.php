@@ -243,7 +243,7 @@ class Totals extends AbstractOrderConfirmationBlock {
 				preg_match('/<span class="woocommerce-Price-amount amount">(.*)<\/span>/', $includes_tax, $matches);
 				$includes_tax = isset($matches[1]) ? $matches[1] : '';
 				$return .= '
-					<tr>
+					<tr class="tax">
 						<th class="wc-block-order-confirmation-totals__label" scope="row">inkl. 19 % MwSt.</th>
 						<td class="wc-block-order-confirmation-totals__total">' . wp_kses_post($includes_tax) . '</td>
 					<tr>
