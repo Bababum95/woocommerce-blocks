@@ -89,7 +89,11 @@
 		justify-content: center;
 
 		.wc-block-components-notices {
-			margin: #{$gap} #{$gap-largest} -#{$gap} #{$gap};
+			position: absolute;
+			top: 30px;
+			left: 20px;
+			right: 20px;
+			z-index: 10;
 			margin-bottom: unset;
 
 			.wc-block-components-notices__notice {
