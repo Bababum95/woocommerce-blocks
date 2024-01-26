@@ -1,3 +1,5 @@
+$input-text-active: #1a1a1a;
+
 .wc-block-components-form .wc-block-components-text-input,
 .wc-block-components-text-input {
 	position: relative;
@@ -11,7 +13,7 @@
 		position: absolute;
 		transform: translateY(em($gap));
 		line-height: 1.25; // =20px when font-size is 16px.
-		left: em($gap-smaller + 1px);
+		left: 20px;
 		top: 0;
 		transform-origin: top left;
 		color: $universal-body-low-emphasis;
@@ -46,22 +48,22 @@
 	input[type="email"] {
 		@include font-size(regular);
 		padding: em($gap);
+		padding-left: 20px;
 		line-height: em($gap);
 		width: 100%;
-		border-radius: $universal-border-radius;
-		border: 1px solid $input-border-gray;
+		border-radius: 12px;
+		border: none;
 		font-family: inherit;
 		margin: 0;
 		box-sizing: border-box;
 		min-height: 0;
-		background-color: #fff;
+		background-color: #F2F2F2;
 		color: $input-text-active;
 
 		&:focus {
-			background-color: #fff;
+			background-color: #D8DAE0;
 			color: $input-text-active;
 			outline: 0;
-			box-shadow: 0 0 0 1px $input-border-gray;
 		}
 
 		.has-dark-controls & {
@@ -84,6 +86,7 @@
 	&.is-active input[type="number"],
 	&.is-active input[type="email"] {
 		padding: em($gap + $gap-smaller) em($gap-smaller) em($gap-smaller);
+		padding-left: 20px;
 	}
 
 	&.is-active label,
