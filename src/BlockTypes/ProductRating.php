@@ -209,6 +209,14 @@ class ProductRating extends AbstractBlock {
 				esc_attr( $styles_and_classes['styles'] ?? '' ),
 				$rating_html
 			);
+		} else {
+			return '<div data-block-name="woocommerce/product-rating" data-is-descendent-of-single-product-template="true" class="wc-block-components-product-rating wc-block-grid__product-rating no-rating">
+						<div class="wc-block-components-product-rating__container">
+								<div class="wc-block-components-product-rating__stars wc-block-grid__product-rating__stars" role="img"></div>
+								<span class="wc-block-components-product-rating__reviews_count"><a class="woocommerce-review-link" rel="nofollow" href="#reviews">Eine Bewertung hinterlassen</a></span>
+							</div>
+							
+					</div>';
 		}
 		return '';
 	}
