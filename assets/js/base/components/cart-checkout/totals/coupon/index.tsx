@@ -92,11 +92,11 @@ export const TotalsCoupon = ( {
 					role="button"
 					href="#wc-block-components-totals-coupon__form"
 					className="wc-block-components-totals-coupon-link"
-					aria-label="Verwenden Coupon"
+					aria-label="Gutscheincode einlösen"
 					onClick={ handleCouponAnchorClick }
 				>
 					<span className="wc-block-components-totals-coupon-link-icon" />
-					Verwenden Coupon
+					Gutscheincode einlösen
 				</a>
 			) : (
 				<LoadingMask
